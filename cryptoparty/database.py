@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from flask import g
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -28,6 +29,7 @@ db_session = scoped_session(sessionmaker(autocommit=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
+
 def init_db():
     # import all modules here that might define models so that
     # they will be registered properly on the metadata.  Otherwise
@@ -37,13 +39,12 @@ def init_db():
 
 from cryptoparty import app
 
-
 @app.before_request
 def create_db_session():
     g.db = db_session()
 
 
 @app.teardown_request
-def teardown_db_session():
+def teardown_db_session(exc):
     g.db.close()
     g.db = None

@@ -41,10 +41,7 @@ class Party(Base):
     def __init__(self, name, time, additional_info, street_address,
                  organizer_email, lat, lon):
         self.name = name
-        if type(time) != datetime.datetime:
-            raise ValueError('time param is not of datetime.datetime')
-        else:
-            self.time = time
+        self.time = time
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email

@@ -17,13 +17,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import json
+
 from cryptoparty import app
-from flask import render_template
+from cryptoparty.model import Party
+
+from flask import render_template, g
 
 
 @app.route('/')
 def hello():
     return render_template("index.html")
+
+
+@app.route('/json/party')
+def get_all_parties_as_json():
+    parties = g.db.query(Party).all()
+    parties_serialized = []
+    for p in parties:
+        party_dict = {
+            'name': p.name,
+            'time': p.time.strftime("%c"),
+            'additional_info': p.additional_info,
+            'street_address': p.street_address,
+            'organizer_email': p.organizer_email,
+            'lat': p.lat,
+            'lon': p.lon
+        }
+        parties_serialized.append(party_dict)
+    return json.dumps(parties_serialized)
 
 
 @app.route('/json/party/<float:lat>/<float:len>')
