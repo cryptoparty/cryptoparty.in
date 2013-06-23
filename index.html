@@ -74,12 +74,28 @@ google.maps.event.addDomListener(window, 'load', initialize);
             </form>
 
             <h3><small>You host a</small> Cryptoparty <small>yourself?</small></h3>
-            Excellent! Why don't you <a href="#">add it to our directory?</a>
+            Excellent! Why don't you <a href="#addParty" data-toggle="modal">add it to our directory?</a>
         </div>
         <div id="map-canvas" class="span8" style="height: 666px"></div>
     </div>
     </div>
+
+    <!-- Modal -->
+    <div id="addParty" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body">
+    <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+    </div>
+    </div>
+
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
