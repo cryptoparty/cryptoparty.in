@@ -1,12 +1,13 @@
 var map;
-var marker;
+var geocoder;
 
 $(document).ready(function () {
     var mapOptions = {
-            zoom: 6, center: new google.maps.LatLng(48.37, 10.89),
+            zoom: 1, center: new google.maps.LatLng(48.37, 10.89),
             mapTypeId: google.maps.MapTypeId.ROADMAP 
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    geocoder = new google.maps.Geocoder();
 
     // get Cryptoparties for markers
     $.ajax({
@@ -32,4 +33,27 @@ $(document).ready(function () {
             });
         }
     });
+});
+
+
+// go to location
+
+function map_go() {
+    var address = $('#search_location_text').val();
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            map.setZoom(10);
+        }
+        else {
+            console.log("geolocation error");
+        }
+    });
+}
+
+$('#search_location_go').on('click', map_go);
+
+$('#search_location_form').on('submit', function() {
+    map_go();
+    return false;
 });

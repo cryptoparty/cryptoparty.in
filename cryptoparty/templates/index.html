@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Cryptoparties.in - Find cryptoparties near you</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,10 +21,10 @@
         <div class="span4">
             <h3>Cryptoparties<small> in your area</small></h3>
             <p>
-            <form class="form-inline">
-                <input type="text" placeholder="Your City, Address, ZIP Code, etc.">
+            <form id="search_location_form" class="form-inline">
+                <input id="search_location_text" type="text" placeholder="Your City, Address, ZIP Code, etc.">
 
-                <button class="btn" type="button">Go!</button>
+                <button id="search_location_go" class="btn" type="button">Go!</button>
 
                 <p><small>No luck finding one? Why don't you <a href="http://www.cryptoparty.in/parties/howto">host your own?</a></small></p>
             </form>
