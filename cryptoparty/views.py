@@ -18,11 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from cryptoparty import app
+from flask import render_template
 
 
 @app.route('/')
 def hello():
-    return 'Hello, World!'
+    return render_template("index.html")
 
 
 @app.route('/json/party/<float:lat>/<float:len>')
@@ -30,6 +31,6 @@ def get_events_as_json(lat, lon):
     pass
 
 
-@app.route('/add', methods=['POST', 'GET'])
-def add_partys():
+@app.route('/add', methods=['POST'])
+def add_parties():
     pass
