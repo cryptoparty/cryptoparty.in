@@ -18,7 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from flask import Flask
+from flask.ext.mail import Mail
+
 app = Flask(__name__)
+app.config.from_object('cryptoparty.config')
+mail = Mail(app)
 
 from cryptoparty.database import *
 from cryptoparty.views import *

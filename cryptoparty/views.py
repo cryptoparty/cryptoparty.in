@@ -25,6 +25,9 @@ from cryptoparty.model import Party, Subscription
 
 from flask import render_template, g, request
 
+from cryptoparty import mail
+from flask.ext.mail import Message
+
 EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
 
 
@@ -83,5 +86,19 @@ def json_subscription_add():
     s = Subscription(email=form_dict['email'], lat=lat, lon=lon)
     g.db.add(s)
     g.db.commit()
+
+    # send confirmation mail
+    msg = Message(
+        subject="cryptoparty.in email address confirmation",
+        body=("Hi! \n" +
+              "You just registered for norifications from cryptoparty.in. \n" +
+              "To confirm that this email address really belongs to you \n" +
+              "please point yout favorite browser to: \n\n" +
+              "    http://cryptoparty.in/subscription/confirm/%s \n\n" %
+              (s.confirmation_token) +
+              "Thanks!"),
+        sender="noreply@cryptoparty.in",
+        recipients=[s.email])
+    mail.send(msg)
 
     return 'OK'

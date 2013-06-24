@@ -1,0 +1,1 @@
+MAIL_SERVER = 'localhost'
