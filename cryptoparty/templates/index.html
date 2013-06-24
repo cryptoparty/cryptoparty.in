@@ -9,11 +9,14 @@
     <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
 
-<style>
-#map-canvas img {
-    max-width: none;
-}
-</style>
+    <style>
+    #map-canvas img {
+        max-width: none;
+    }
+    </style>
+    <script>
+        var default_location = '{{location}}';
+    </script>
   </head>
   <body>
     <div class="container">
@@ -37,13 +40,19 @@
 
             <h3><small>Notify me about </small>Cryptoparties</h3>
             <p>You're interested in cryptoparites? Good! If you don't want to miss one in your area, pass us your email address and your location.</p>
-
-            <form>
-                    <input type="text" placeholder="Your location"><br>
-                    <input type="text" placeholder="Your email address"><br>
+            <div id="notify_me_about_cryptoparties">
+            <div id="subscription_error"></div>
+                <form id="subscription_form">
+                    <div class="input-append">
+                        <input id="subscription_location_text" type="text" placeholder="Your location">
+                        <button class="btn" type="button" id='subscription_search_btn'><i class="icon-search"></i></button>
+                    </div>
+                    <input type="hidden" name="subscription_lat">
+                    <input type="hidden" name="subscription_lon">
+                    <input type="text" name="subscription_email" placeholder="Your email address"><br>
                     <button class="btn btn-primary">Keep me in the loop!</button>
-            </form>
-
+                </form>
+            </div>
             <h3><small>You host a</small> Cryptoparty <small>yourself?</small></h3>
             Excellent! Why don't you <a href="#addParty" data-toggle="modal">add it to our directory?</a>
         </div>

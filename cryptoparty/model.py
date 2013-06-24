@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 
 from cryptoparty.database import Base
@@ -49,6 +47,29 @@ class Party(Base):
         self.lon = lon
         self.confirmed = False
         self.confirmation_token = random_string(length=42)
+
+    def confirm(self, token):
+        if self.confirmed:
+            raise ValueError('Party already confirmed')
+        if self.confirmation_token == token:
+            self.confirmed = True
+
+
+class Subscription(Base):
+    __tablename__ = 'Subscriptions'
+    id = Column(Integer, primary_key=True)
+    email = Column(String)
+    lat = Column(Float)
+    lon = Column(Float)
+    confirmed = Column(Boolean)
+    confirmation_token = Column(String)
+
+    def __init__(self, email, lat, lon):
+        self.email = email
+        self.lat = lat
+        self.lon = lon
+        self.confirmed = False
+        self.confirmation_token = random_string(length=43)
 
     def confirm(self, token):
         if self.confirmed:

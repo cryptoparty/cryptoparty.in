@@ -26,8 +26,9 @@ from flask import render_template, g
 
 
 @app.route('/')
-def hello():
-    return render_template("index.html")
+@app.route('/<location>')
+def hello(location=None):
+    return render_template("index.html", location=location)
 
 
 @app.route('/json/party')
@@ -48,11 +49,6 @@ def get_all_parties_as_json():
     return json.dumps(parties_serialized)
 
 
-@app.route('/json/party/<float:lat>/<float:len>')
-def get_events_as_json(lat, lon):
-    pass
-
-
-@app.route('/add', methods=['POST'])
-def add_parties():
-    pass
+@app.route('/json/subscription/add', methods=['POST'])
+def json_subscription_add():
+    return 'OK'
