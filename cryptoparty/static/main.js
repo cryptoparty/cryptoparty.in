@@ -100,16 +100,17 @@ $('#subscription_form').on('submit', function() {
     $.ajax({
         type: 'POST',
         url: '/json/subscription/add',
-        data: {data: formdata},
+        data: {data: JSON.stringify(formdata)},
         success: function(result, status) {
             if(result == "OK") { 
+                console.log(result);
                 $('#subscription_error').html("<div class=\"alert alert-success\">"+
                     "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+
                     "<strong>Okay, then!</strong> You should receive a confirmation"+
                     "email shortly. Just click on the link in it and you're done!</div>")
             } else {
                 $('#subscription_error').html("<div class=\"alert alert-error\">"+
-                    "<strong>Oh no!</strong>Something was wrong. The Serve said: "+result+"</div>");
+                    "<strong>Oh no!</strong> Something was wrong. The server said: "+result+"</div>");
             }
         }
     });

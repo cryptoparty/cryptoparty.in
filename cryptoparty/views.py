@@ -17,12 +17,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 import json
 
 from cryptoparty import app
-from cryptoparty.model import Party
+from cryptoparty.model import Party, Subscription
 
-from flask import render_template, g
+from flask import render_template, g, request
+
+EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
 
 
 @app.route('/')
@@ -49,6 +52,36 @@ def get_all_parties_as_json():
     return json.dumps(parties_serialized)
 
 
-@app.route('/json/subscription/add', methods=['POST'])
+@app.route('/json/subscription/add', methods=['POST', 'GET'])
 def json_subscription_add():
+    # load and unpack form data
+    try:
+        formdata = request.form['data']
+        form_dict = json.loads(formdata)
+    except Exception, e:
+        return 'Error! ' + str(e)
+    if form_dict['lat'] == "" or form_dict['lon'] == "":
+        return 'Error! No location selected.'
+
+    # convert geodata to floats
+    try:
+        lon = float(form_dict['lon'])
+        lat = float(form_dict['lat'])
+    except KeyError, e:
+        return 'Error! ' + str(e)
+    except ValueError, e:
+        return 'Error! ' + str(e)
+
+    # check email address
+    try:
+        if not EMAIL_REGEX.match(form_dict['email']):
+            return 'Error: invalid Email address'
+    except KeyError, e:
+        return 'Error! ' + str(e)
+
+    # create and store Subscription Object
+    s = Subscription(email=form_dict['email'], lat=lat, lon=lon)
+    g.db.add(s)
+    g.db.commit()
+
     return 'OK'
