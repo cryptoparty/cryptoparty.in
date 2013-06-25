@@ -102,3 +102,20 @@ def json_subscription_add():
     mail.send(msg)
 
     return 'OK'
+
+
+@app.route('/subscription/confirm/<token>')
+def web_subscription_confirm(token):
+    s = g.db.query(Subscription).filter(Subscription.confirmation_token ==
+                                        token).all()
+    if len(s) > 0:
+        try:
+            s[0].confirm(token)
+        except ValueError:
+            return render_template("confirm.html", success=False,
+                                   errormsg="Subscription already confirmed")
+        g.db.commit()
+        return render_template("confirm.html", success=True)
+    else:
+        return render_template("confirm.html", success=False,
+                errormsg="No Subscription to confirm.")

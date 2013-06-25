@@ -97,6 +97,8 @@ $('#subscription_form').on('submit', function() {
         lon: $('[name=subscription_lon]').val()
     };
 
+    $('#subscription_error').html("<div class=\"alert alert-info\">doing stuff...</div>");
+    
     $.ajax({
         type: 'POST',
         url: '/json/subscription/add',
