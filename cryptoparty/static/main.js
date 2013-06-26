@@ -123,3 +123,7 @@ $('#subscription_form').on('submit', function() {
 
     return false;
 });
+
+$('#addParty').on('show', function() {
+    $('#add_party_iframe').attr('src', '/party/add');
+});

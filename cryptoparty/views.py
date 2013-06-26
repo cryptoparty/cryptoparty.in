@@ -22,11 +22,10 @@ import json
 
 from cryptoparty import app
 from cryptoparty.model import Party, Subscription
+from cryptoparty import mail
 
 from flask import render_template, g, request
 from wtforms import Form, TextField, FileField, validators
-
-from cryptoparty import mail
 from flask.ext.mail import Message
 
 EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
@@ -123,16 +122,31 @@ def web_subscription_confirm(token):
 
 
 @app.route('/party/add', methods=['POST', 'GET'])
-def json_party_add():
+def web_party_add():
+    class AddPartyForm(Form):
+        name = TextField('Event name', [validators.required()])
+        date = TextField('Time and date', [validators.required()])
+        additional_info = TextField('Additional Info', [validators.required()])
+        street_address = TextField('Street address', [validators.required()])
+        organizer_email = TextField('Your email address',
+                                    [validators.required()])
+        organizer_pubkey = FileField('Your GPG Public key')
+
     if request.method == 'GET':
-        return render_template("add_party.html")
+        form = AddPartyForm()
+        return render_template("add_party.html", form=form)
 
     ## check input
+    form = AddPartyForm(request.form)
+    if not form.validate():
+        return render_template("add_party.html", form=form)
 
-    ## get gpg key
+    ## get and check gpg key
 
     ## encrypt mail
 
     ## send
+
+    ## add party
 
     return 'OK'
