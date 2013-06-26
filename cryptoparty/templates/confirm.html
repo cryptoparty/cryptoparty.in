@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+
+{% block message %}
+{% if success %}
+<div class="alert alert-success">Your email adderess has benn confirmed. You will receive notifications about future cryptoparties in your area.</div>
+{% else %}
+<div class="alert alert-error"><strong>Error:</strong> The server said: {{errormsg}}</div>
+{% endif %}
+{% endblock %}
