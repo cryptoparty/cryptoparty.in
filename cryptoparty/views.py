@@ -24,6 +24,7 @@ from cryptoparty import app
 from cryptoparty.model import Party, Subscription
 
 from flask import render_template, g, request
+from wtforms import Form, TextField, FileField, validators
 
 from cryptoparty import mail
 from flask.ext.mail import Message
@@ -55,7 +56,7 @@ def get_all_parties_as_json():
     return json.dumps(parties_serialized)
 
 
-@app.route('/json/subscription/add', methods=['POST', 'GET'])
+@app.route('/json/subscription/add', methods=['POST'])
 def json_subscription_add():
     # load and unpack form data
     try:
@@ -118,4 +119,20 @@ def web_subscription_confirm(token):
         return render_template("confirm.html", success=True)
     else:
         return render_template("confirm.html", success=False,
-                errormsg="No Subscription to confirm.")
+                               errormsg="No Subscription to confirm.")
+
+
+@app.route('/party/add', methods=['POST', 'GET'])
+def json_party_add():
+    if request.method == 'GET':
+        return render_template("add_party.html")
+
+    ## check input
+
+    ## get gpg key
+
+    ## encrypt mail
+
+    ## send
+
+    return 'OK'

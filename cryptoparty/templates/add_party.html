@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptoparties.in - Find cryptoparties near you</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+
+    <style>
+    #map-canvas img {
+        max-width: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Event name</label>
+        <div class="controls">
+        <input id="textinput" name="textinput" placeholder="Kryptofest" class="input-xlarge" type="text">
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Time and date</label>
+        <div class="controls">
+
+        <div id="datetimepicker2" class="input-append">
+                <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+                <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                </i>
+                </span>
+        </div>
+
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Additional Info URL</label>
+        <div class="controls">
+        <input id="textinput" name="textinput" placeholder="http://your-hackerpspace.org/wiki/Kryptofest" class="input-xlarge" type="text">
+        <p class="help-block">Link to a resource containing additional information on your party <br>
+        (wiki page, official announcement mail, etc...)</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Street address</label>
+        <div class="controls">
+        <input id="textinput" name="textinput" placeholder="" class="input-xlarge" type="text">
+        <p class="help-block">We're using google's geocoder to find it, so it <br>doesn't hurt to be a bit more specific :)</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Your email address</label>
+        <div class="controls">
+        <input id="textinput" name="textinput" placeholder="foo@bar.de" class="input-xlarge" type="text">
+        <p class="help-block">We will send you a confirmation link in an encrypted email.</p>
+        </div>
+        </div>
+
+        <!-- File Button --> 
+        <div class="control-group">
+        <label class="control-label" for="filebutton">Your PGP Publickey</label>
+        <div class="controls">
+        <input id="filebutton" name="filebutton" class="input-file" type="file">
+        <p class="help-block">We will encrypt the verification email with that key, so make sure <br>you control the private key as well.</p>
+        </div>
+        </div>
+
+        <div class="control-group">
+                <input type="submit" class="btn btn-primary" value="Add Party">
+        </div> 
+        </fieldset>
+        </form>
+
+
+    </div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+            $(document).ready(function() {
+                $('#datetimepicker2').datetimepicker({
+                    language: 'pt-BR'
+                });
+            });
+    </script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+</body>
+</html>
