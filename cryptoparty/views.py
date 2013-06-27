@@ -132,10 +132,11 @@ def web_party_add():
         name = TextField('Event name', [validators.required()])
         date = DateTimeField('Time and date', [validators.required()],
                              format='%d-%m-%Y %H:%M')
-        additional_info = TextField('Additional Info', [validators.required()])
+        additional_info = TextField('Additional Info', [validators.required(),
+                                    validators.URL()])
         street_address = TextField('Street address', [validators.required()])
         organizer_email = TextField('Your email address',
-                                    [validators.required()])
+                                    [validators.required(), validators.Email()])
         organizer_pubkey = FileField('Your GPG Public key')
 
     if request.method == 'GET':
@@ -154,7 +155,7 @@ def web_party_add():
     result = gpg.import_keys(request.files['organizer_pubkey'].read())
 
     if len(result.fingerprints) != 1:
-        # error injection goes here
+        form.errors['organizer_pubkey'] = ["Your publickey could not be imported"]
         return render_template("add_party.html", form=form)
 
     organizer_fingerprint = result.fingerprints[0]
@@ -186,6 +187,7 @@ def web_party_add():
                   recipients=[p.organizer_email])
 
     mail.send(msg)
+    # TODO delete file in /tmp
 
     return 'OK'
 
