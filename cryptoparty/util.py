@@ -19,6 +19,8 @@
 
 import string
 import random
+import urllib2
+import json
 
 
 def random_string(length):
@@ -28,3 +30,16 @@ def random_string(length):
     """
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for x in range(length))
+
+
+def geocode(address):
+    """
+    takes an address string and returns a (lat, lng) tuple
+    """
+    url_encoded_address = urllib2.quote(address)
+    geocode_url = "http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false" % url_encoded_address
+
+    req = urllib2.urlopen(geocode_url)
+    res = json.loads(req.read())
+    location = res['results'][0]['geometry']['location']
+    return (location['lat'], location['lng'])

@@ -23,10 +23,12 @@ import json
 from cryptoparty import app
 from cryptoparty.model import Party, Subscription
 from cryptoparty import mail
+from cryptoparty.util import random_string, geocode
 
 from flask import render_template, g, request
-from wtforms import Form, TextField, FileField, validators
+from wtforms import Form, TextField, FileField, DateTimeField, validators
 from flask.ext.mail import Message
+import gnupg
 
 EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
 
@@ -125,7 +127,8 @@ def web_subscription_confirm(token):
 def web_party_add():
     class AddPartyForm(Form):
         name = TextField('Event name', [validators.required()])
-        date = TextField('Time and date', [validators.required()])
+        date = DateTimeField('Time and date', [validators.required()],
+                             format='%d-%m-%Y %H:%M')
         additional_info = TextField('Additional Info', [validators.required()])
         street_address = TextField('Street address', [validators.required()])
         organizer_email = TextField('Your email address',
@@ -142,11 +145,43 @@ def web_party_add():
         return render_template("add_party.html", form=form)
 
     ## get and check gpg key
+    temp_keyring_file = '/tmp/' + random_string(length=8) + '.asc'
+    gpg = gnupg.GPG(keyring=temp_keyring_file)
+
+    result = gpg.import_keys(request.files['organizer_pubkey'].read())
+
+    if len(result.fingerprints) != 1:
+        # error injection goes here
+        return render_template("add_party.html", form=form)
+
+    organizer_fingerprint = result.fingerprints[0]
+
+    ## create and save party object
+
+    party_location = geocode(form.street_address.data)
+
+    p = Party(name=form.name.data, time=form.date.data,
+              additional_info=form.additional_info.data,
+              street_address=form.street_address.data,
+              organizer_email=form.organizer_email.data,
+              lat=party_location[0], lon=party_location[1])
+    g.db.add(p)
+    g.db.commit()
 
     ## encrypt mail
+    msg_body = "Hi! \n\nYou registered a cryptoparty at cryptoparty.in.\n\n"+\
+            "To verify your email address please click on the link below'\n\n\n"+\
+            "https://cryptoparty.in/party/confirm/" + p.confirmation_token + "\n\n\n" +\
+            "Thanks!"
 
+    encrypted_mail = gpg.encrypt(msg_body, [organizer_fingerprint],
+                                 always_trust=True)
     ## send
+    msg = Message(subject="cryptoparty.in email address confirmation",
+                  body=str(encrypted_mail),
+                  sender="noreply@cryptoparty.in",
+                  recipients=[p.organizer_email])
 
-    ## add party
+    mail.send(msg)
 
     return 'OK'
