@@ -9,9 +9,6 @@ $(document).ready(function () {
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     geocoder = new google.maps.Geocoder();
 
-    $('#datetimepicker2').datetimepicker({
-      language: 'pt-BR'
-    });
 
     // set default location if location is given in URL
     if(default_location != 'None') {
