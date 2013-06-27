@@ -33,11 +33,11 @@ $(document).ready(function () {
             parties = jQuery.parseJSON(result)
             $.each(parties, function(index, value) {
                 var ll = new google.maps.LatLng(value.lat, value.lon);             
-                m = new google.maps.Marker({
+                var m = new google.maps.Marker({
                     position: ll,
                     map: map,
                     title: value.name});
-                i = new google.maps.InfoWindow({
+                var i = new google.maps.InfoWindow({
                     content: '<p><h4>'+value.name+'</h4></p>'+
                              '<p><b>Street Address: </b>'+value.street_address+'</p>'+
                              '<p><b>Date: </b>'+value.time+'</p>'+
