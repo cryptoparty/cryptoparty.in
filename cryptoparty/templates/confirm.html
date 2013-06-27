@@ -2,8 +2,8 @@
 
 {% block message %}
 {% if success %}
-<div class="alert alert-success">Your email adderess has benn confirmed. You will receive notifications about future cryptoparties in your area.</div>
+<div class="alert alert-success">{{msg}}</div>
 {% else %}
-<div class="alert alert-error"><strong>Error:</strong> The server said: {{errormsg}}</div>
+<div class="alert alert-error"><strong>Error:</strong> The server said: {{msg}}</div>
 {% endif %}
 {% endblock %}

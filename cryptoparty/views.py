@@ -19,6 +19,7 @@
 
 import re
 import json
+from datetime import datetime
 
 from cryptoparty import app
 from cryptoparty.model import Party, Subscription
@@ -41,7 +42,8 @@ def hello(location=None):
 
 @app.route('/json/party')
 def get_all_parties_as_json():
-    parties = g.db.query(Party).all()
+    parties = g.db.query(Party).filter(Party.confirmed == True).\
+            filter(Party.time > datetime.now()).all()
     parties_serialized = []
     for p in parties:
         party_dict = {
@@ -115,12 +117,13 @@ def web_subscription_confirm(token):
             s[0].confirm(token)
         except ValueError:
             return render_template("confirm.html", success=False,
-                                   errormsg="Subscription already confirmed")
+                                   msg="Subscription already confirmed")
         g.db.commit()
-        return render_template("confirm.html", success=True)
+        return render_template("confirm.html", success=True,
+                                msg="Your subscription has been confirmed.")
     else:
         return render_template("confirm.html", success=False,
-                               errormsg="No Subscription to confirm.")
+                               msg="No Subscription to confirm.")
 
 
 @app.route('/party/add', methods=['POST', 'GET'])
@@ -185,3 +188,23 @@ def web_party_add():
     mail.send(msg)
 
     return 'OK'
+
+
+@app.route('/party/confirm/<token>')
+def web_party_confirm(token):
+    p = g.db.query(Party).filter(Party.confirmation_token ==
+                                 token).all()
+    if len(p) > 0:
+        try:
+            p[0].confirm(token)
+        except ValueError:
+            return render_template("confirm.html", success=False,
+                                   msg="Party already confirmed")
+        g.db.commit()
+        return render_template("confirm.html", success=True,
+                               msg="Your e-mail address is now confirmed. Thanks!")
+    else:
+        return render_template("confirm.html", success=False,
+                               msg="No Party to confirm.")
+
+
