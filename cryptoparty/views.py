@@ -42,8 +42,7 @@ def hello(location=None):
 
 @app.route('/json/party')
 def get_all_parties_as_json():
-    parties = g.db.query(Party).filter(Party.confirmed == True).\
-            filter(Party.time > datetime.now()).all()
+    parties = g.db.query(Party).all()
     parties_serialized = []
     for p in parties:
         party_dict = {
@@ -52,8 +51,8 @@ def get_all_parties_as_json():
             'additional_info': p.additional_info,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
-            'lat': p.lat,
-            'lon': p.lon
+            'lat': g.db.scalar(p.position.x),
+            'lon': g.db.scalar(p.position.y)
         }
         parties_serialized.append(party_dict)
     return json.dumps(parties_serialized)
