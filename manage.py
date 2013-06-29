@@ -33,7 +33,7 @@ def runserver():
     runs a local development server on port 5000
     """
     from cryptoparty import app
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
 
 
 if __name__ == '__main__':

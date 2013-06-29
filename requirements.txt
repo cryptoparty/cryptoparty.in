@@ -1,4 +1,7 @@
 flask
 Flask-Mail
 sqlalchemy
+geoalchemy2
+psycopg2
+wtforms
 python-gnupg
