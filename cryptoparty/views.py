@@ -181,7 +181,7 @@ def web_party_add():
     mail.send(msg)
     # TODO delete file in /tmp
 
-    return render_template("add_party.html", success=True)
+    return render_template("add_party.html", success=True, form=form)
 
 
 @app.route('/party/confirm/<token>')

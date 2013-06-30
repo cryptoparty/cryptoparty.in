@@ -23,6 +23,12 @@
         </ul></div>
         {% endif %}
 
+        {% if success %}
+
+        <div class="alert alert-success"><strong>Thanks!</strong> You successfully submitted your Cryptoparty. All you have to do now is visit the link we emailed you.</div>
+
+        {% endif %}
+
         <form method="POST" url="" enctype="multipart/form-data">
         <!-- Text input-->
         <div class="control-group">
@@ -78,7 +84,7 @@
 
         <!-- File Button --> 
         <div class="control-group">
-        <label class="control-label" for="filebutton">Your PGP Publickey</label>
+        <label class="control-label" for="filebutton">Your PGP Publickey (ASCII-armored)</label>
         <div class="controls">
         <input id="filebutton" name="organizer_pubkey" class="input-file" type="file">
         <p class="help-block">We will encrypt the verification email with that key, so make sure <br>you control the private key as well.</p>
