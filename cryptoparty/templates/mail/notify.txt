@@ -1,0 +1,20 @@
+Hi!
+
+A while ago, you registered to be notified when someone announces a
+cryptoparty in your Area. Well, someone did and we thought we'd let yoy know.
+Here's the details:
+
+  {{party.name}}
+
+  {{party.time.strftime("%c")}}
+
+  {{party.street_address}}
+
+  Additional Info: {{party.additional_info}}
+
+  Organizer Email: {{party.organizer_email}}
+
+If you're planning to attend, visit the additional info link and let the 
+organizer know you're attending!
+
+Have a wonderful day (or night)!

@@ -43,7 +43,7 @@ class Party(Base):
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email
-        wkt_pos = "POINT(%f %f)" % (lat, lon)
+        wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmed = False
         self.confirmation_token = random_string(length=42)
@@ -66,7 +66,7 @@ class Subscription(Base):
     def __init__(self, email, lat, lon):
         self.email = email
         self.confirmed = False
-        wkt_pos = "POINT(%f %f)" % (lat, lon)
+        wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmation_token = random_string(length=43)
 

@@ -6,7 +6,7 @@ echo installing dependencies...
 apt-get update
 apt-get install -y python-pip python-dev build-essential
 pip install --upgrade pip
-pip install -r /vagrant/scripts/requirements.txt
+pip install -r /vagrant/requirements.txt
 apt-get install -y postgresql libpq-dev postgresql-9.1-postgis
 echo setting up database
 su postgres

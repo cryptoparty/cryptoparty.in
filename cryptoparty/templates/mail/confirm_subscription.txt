@@ -1,0 +1,10 @@
+Hi!
+
+You just registered for norifications from cryptoparty.in.
+
+To confirm that this email address really belongs to you, please point your
+favorite browser to:
+
+    http://cryptoparty.in/subscription/confirm/{{token}}
+
+Thanks!

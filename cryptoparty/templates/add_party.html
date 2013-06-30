@@ -14,17 +14,14 @@
     </style>
   </head>
   <body>
-    <div class="container"> 
+    <div class="container">
         {% if form.errors %}
         <div class="alert alert-error"><ul>
         {% for field in form.errors.keys() %}
             <li><b>{{ form[field].label.text }}:</b> {{ form.errors[field][0] }}</li>
         {% endfor %}
         </ul></div>
-         
-
         {% endif %}
-
 
         <form method="POST" url="" enctype="multipart/form-data">
         <!-- Text input-->

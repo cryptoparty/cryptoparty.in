@@ -42,7 +42,8 @@ def hello(location=None):
 
 @app.route('/json/party')
 def get_all_parties_as_json():
-    parties = g.db.query(Party).all()
+    parties = g.db.query(Party).filter(Party.time > datetime.now()).\
+        filter(Party.confirmed).all()
     parties_serialized = []
     for p in parties:
         party_dict = {
@@ -51,8 +52,7 @@ def get_all_parties_as_json():
             'additional_info': p.additional_info,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
-            'lat': g.db.scalar(p.position.x),
-            'lon': g.db.scalar(p.position.y)
+            'position': json.loads(g.db.scalar(p.position.ST_AsGeoJSON()))
         }
         parties_serialized.append(party_dict)
     return json.dumps(parties_serialized)
@@ -93,13 +93,8 @@ def json_subscription_add():
     # send confirmation mail
     msg = Message(
         subject="cryptoparty.in email address confirmation",
-        body=("Hi! \n" +
-              "You just registered for norifications from cryptoparty.in. \n" +
-              "To confirm that this email address really belongs to you \n" +
-              "please point yout favorite browser to: \n\n" +
-              "    http://cryptoparty.in/subscription/confirm/%s \n\n" %
-              (s.confirmation_token) +
-              "Thanks!"),
+        body=render_template("mail/confirm_subscription.txt",
+                             token=s.confirmation_token),
         sender="noreply@cryptoparty.in",
         recipients=[s.email])
     mail.send(msg)
@@ -171,10 +166,8 @@ def web_party_add():
     g.db.commit()
 
     ## encrypt mail
-    msg_body = "Hi! \n\nYou registered a cryptoparty at cryptoparty.in.\n\n"+\
-            "To verify your email address please click on the link below'\n\n\n"+\
-            "https://cryptoparty.in/party/confirm/" + p.confirmation_token + "\n\n\n" +\
-            "Thanks!"
+    msg_body = render_template("mail/confirm_party.txt",
+                               token=p.confirmation_token)
 
     encrypted_mail = gpg.encrypt(msg_body, [organizer_fingerprint],
                                  always_trust=True)
@@ -186,7 +179,7 @@ def web_party_add():
 
     mail.send(msg)
 
-    return 'OK'
+    return render_template("add_party.html", success=True)
 
 
 @app.route('/party/confirm/<token>')
@@ -200,10 +193,37 @@ def web_party_confirm(token):
             return render_template("confirm.html", success=False,
                                    msg="Party already confirmed")
         g.db.commit()
+
+        ## send mail to subscribers
+
+        # query subscriptions
+        subscriptions = g.db.query(Subscription).\
+            filter(Subscription.position.
+                   ST_DWithin(p[0].position, 100000)).\
+            filter(Subscription.confirmed).\
+            all()
+
+        mails = []
+
+        # construct mails
+
+        for s in subscriptions:
+            msg_body = render_template("mail/notify.txt", party=p[0])
+            msg = Message(
+                subject="Someone announced a cryptoparty in your area!",
+                body=msg_body,
+                sender="noreply@cryptoparty.in",
+                recipients=[s.email])
+            mails.append(msg)
+
+        # actually send mails
+        with mail.connect() as conn:
+            for m in mails:
+                conn.send(m)
+
         return render_template("confirm.html", success=True,
-                               msg="Your e-mail address is now confirmed. Thanks!")
+                               msg="Your e-mail address is now " +
+                               "confirmed. Thanks!")
     else:
         return render_template("confirm.html", success=False,
                                msg="No Party to confirm.")
-
-
