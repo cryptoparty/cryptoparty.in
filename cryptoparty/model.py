@@ -21,6 +21,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 
 from cryptoparty.database import Base
 from cryptoparty.util import random_string
+from geoalchemy2 import Geography
 
 
 class Party(Base):
@@ -31,8 +32,7 @@ class Party(Base):
     additional_info = Column(String)
     street_address = Column(String)
     organizer_email = Column(String)
-    lat = Column(Float)
-    lon = Column(Float)
+    position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
 
@@ -43,8 +43,8 @@ class Party(Base):
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email
-        self.lat = lat
-        self.lon = lon
+        wkt_pos = "POINT(%f %f)" % (lon, lat)
+        self.position = wkt_pos
         self.confirmed = False
         self.confirmation_token = random_string(length=42)
 
@@ -59,16 +59,15 @@ class Subscription(Base):
     __tablename__ = 'Subscriptions'
     id = Column(Integer, primary_key=True)
     email = Column(String)
-    lat = Column(Float)
-    lon = Column(Float)
+    position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
 
     def __init__(self, email, lat, lon):
         self.email = email
-        self.lat = lat
-        self.lon = lon
         self.confirmed = False
+        wkt_pos = "POINT(%f %f)" % (lon, lat)
+        self.position = wkt_pos
         self.confirmation_token = random_string(length=43)
 
     def confirm(self, token):
@@ -76,3 +75,7 @@ class Subscription(Base):
             raise ValueError('Party already confirmed')
         if self.confirmation_token == token:
             self.confirmed = True
+
+
+Party.__table__.c.position.type.management = True
+Subscription.__table__.c.position.type.management = True

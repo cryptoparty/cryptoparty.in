@@ -29,7 +29,8 @@ $(document).ready(function () {
         success: function(result) {
             parties = jQuery.parseJSON(result)
             $.each(parties, function(index, value) {
-                var ll = new google.maps.LatLng(value.lat, value.lon);             
+                var ll = new google.maps.LatLng(value.position.coordinates[1], value.position.coordinates[0]);             
+                console.log(ll);
                 var m = new google.maps.Marker({
                     position: ll,
                     map: map,

@@ -1,0 +1,9 @@
+Hi!
+
+You registered a cryptoparty at cryptoparty.in.
+
+To verify your email address please click on the link below.
+
+https://cryptoparty.in/party/confirm/{{token}}
+           
+Thanks!
