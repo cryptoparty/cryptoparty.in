@@ -110,7 +110,7 @@ $('#subscription_form').on('submit', function() {
                 console.log(result);
                 $('#subscription_error').html("<div class=\"alert alert-success\">"+
                     "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+
-                    "<strong>Okay, then!</strong> You should receive a confirmation"+
+                    "<strong>Okay, then!</strong> You should receive a confirmation "+
                     "email shortly. Just click on the link in it and you're done!</div>")
             } else {
                 $('#subscription_error').html("<div class=\"alert alert-error\">"+
