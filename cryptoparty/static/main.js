@@ -39,7 +39,7 @@ $(document).ready(function () {
                     content: '<p><h4>'+value.name+'</h4></p>'+
                              '<p><b>Street Address: </b>'+value.street_address+'</p>'+
                              '<p><b>Date: </b>'+value.time+'</p>'+
-                             '<p><b>Additional Info: </b>'+value.additional_info+'</p>'+
+                             '<p><b>Additional Info: </b><a href="'+value.additional_info+'">[link]</a></p>'+
                              '<p><b>Event Organizer: </b>'+value.organizer_email+'</p>'
                 });
                 google.maps.event.addListener(m, 'click', function() {
