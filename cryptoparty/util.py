@@ -36,7 +36,7 @@ def geocode(address):
     """
     takes an address string and returns a (lat, lng) tuple
     """
-    url_encoded_address = urllib2.quote(address)
+    url_encoded_address = urllib2.quote(address.encode('utf-8'))
     geocode_url = "http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false" % url_encoded_address
 
     req = urllib2.urlopen(geocode_url)

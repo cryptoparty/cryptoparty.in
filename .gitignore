@@ -1,3 +1,4 @@
 *.pyc
 *.sw[op]
 .vagrant
+.ropeproject
