@@ -6,10 +6,10 @@ Updates
 -------
 * now using the OSM Tileserver
 * started porting to leaflet.js
-* added some demo functionailty
+* added some demo functionailty to the map like an example map pin
 
-ToDO
-----
+To Do
+-----
  * heavy editing of main.js in accordance to change from google maps API to leaflet.js API as per http://leafletjs.com/reference.html
 
 Deployment
