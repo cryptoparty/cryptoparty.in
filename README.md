@@ -2,8 +2,8 @@ cryptoparty.in
 ==============
 Web overview of cryptoparties all around the world overlayed on a map.
 
-*OSM Tileserver
-*plans to port from google maps to leaflet.js
+ * OSM Tileserver 
+ * plans to port from google maps to leaflet.js
 
 Deployment
 ----------
@@ -19,19 +19,19 @@ as root:
 
 as a result, these should be installed, correct if not so:
 
-*libpq-dev
-*postgresql
-*postgresql-9.1
-*postgresql-common
-*postgresql-client-9.1
-*postgresql-client-common
-*postgresql-server-dev-9.1
-*postgresql-9.1-postgis
-*libgeos-dev
-*libgeos-c1
-*libgeos-3.3.3
-*postgis
-*libproj0
+* libpq-dev
+* postgresql
+* postgresql-9.1
+* postgresql-common
+* postgresql-client-9.1
+* postgresql-client-common
+* postgresql-server-dev-9.1
+* postgresql-9.1-postgis
+* libgeos-dev
+* libgeos-c1
+* libgeos-3.3.3
+* postgis
+* libproj0
 *proj-data
 
 Make a new virtualenv:
