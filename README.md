@@ -2,8 +2,15 @@ cryptoparty.in
 ==============
 Web overview of cryptoparties all around the world overlayed on a map.
 
- * plns to use the OSM Tileserver
- * plans to port from google maps to leaflet.js
+Updates
+-------
+* now using the OSM Tileserver
+* started porting to leaflet.js
+* added some demo functionailty
+
+ToDO
+----
+ * heavy editing of main.js in accordance to change from google maps API to leaflet.js API as per http://leafletjs.com/reference.html
 
 Deployment
 ----------
