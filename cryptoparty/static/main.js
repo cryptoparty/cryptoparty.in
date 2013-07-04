@@ -22,6 +22,22 @@ $(document).ready(function () {
 
     map.setView(new L.LatLng(48.37, 10.89), 1);
     map.addLayer(osm);
+    var marker = L.marker([51.5, -0.09]).addTo(map);
+    marker.bindPopup("<b>CryptopartyLondon!</b><br>Twitter: <a href=\"https://twitter.com/CryptoPartyLond\" target=\"_blank\">@CryptoPartyLond</a><br>Wiki: <a href=\"https://www.cryptoparty.in/london\" target=\"_blank\">london</a>");
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("There ain't no party like a #Cryptoparty <br><br>It looks like there is no party at <b>" + e.latlng.toString() + "</b><br><br>Why don't you <a href=\"http://www.cryptoparty.in/parties/howto\" target=\"_blank\">host your own?</a>")
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+
+// lat=51.51024 lon=-0.127024 zoom=18
+
     });
 
     /*
