@@ -84,9 +84,9 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
-    <script src="/static/main.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" />
+    <script src="{{ url_for('static', filename='leaflet.js') }}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 
  </body>
 </html>
