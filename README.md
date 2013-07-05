@@ -8,6 +8,9 @@ Updates
 * started porting to leaflet.js
 * added some demo functionailty to the map like an example map pin
 
+Screenshot
+----------
+![](screenshot.png?raw=true)
 
 To Do
 -----
