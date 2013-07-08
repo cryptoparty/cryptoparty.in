@@ -15,6 +15,7 @@
   </head>
   <body>
     <div class="container">
+        <img src="{{ url_for('static', filename='CryptopartyGenericLogo.gif') }}">
         {% if form.errors %}
         <div class="alert alert-error"><ul>
         {% for field in form.errors.keys() %}
