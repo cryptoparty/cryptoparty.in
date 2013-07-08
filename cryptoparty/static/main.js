@@ -24,7 +24,6 @@ $(document).ready(function () {
     marker.bindPopup("<b>CryptopartyLondon!</b><br>Twitter: <a href=\"https://twitter.com/CryptoPartyLond\" target=\"_blank\">@CryptoPartyLond</a><br>Wiki: <a href=\"https://www.cryptoparty.in/london\" target=\"_blank\">london</a>");
 
     var popup = L.popup();
-
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
@@ -34,7 +33,16 @@ $(document).ready(function () {
 
     map.on('click', onMapClick);
 
+    if(default_location != 'None') {
+        
+    }
+
 // lat=51.51024 lon=-0.127024 zoom=18
+
+    if (default_location != 'None') {
+        map_go(default_location);
+    }
+
 
     });
 
