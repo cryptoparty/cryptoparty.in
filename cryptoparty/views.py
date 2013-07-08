@@ -97,7 +97,10 @@ def json_subscription_add():
                              token=s.confirmation_token),
         sender="noreply@cryptoparty.in",
         recipients=[s.email])
-    mail.send(msg)
+    try:
+        mail.send(msg)
+    except Exception, e:
+        return 'error sending mail'
 
     return 'OK'
 

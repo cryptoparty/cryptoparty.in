@@ -37,40 +37,13 @@ $(document).ready(function () {
         
     }
 
-// lat=51.51024 lon=-0.127024 zoom=18
-
     if (default_location != 'None') {
         map_go(default_location);
     }
 
 
     });
-
-    /*
-    var mapOptions = {
-        zoom: 1,
-        center: new google.maps.LatLng(48.37, 10.89),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    gmap = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    geocoder = new google.maps.Geocoder();
-
-
-    // set default location if location is given in URL
-    if (default_location != 'None') {
-        geocoder.geocode({
-            'address': default_location
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                gmap.setCenter(results[0].geometry.location);
-                gmap.setZoom(10);
-            } else {
-                console.log("geolocation error");
-            }
-        });
-
-    }
-
+/*
     // get Cryptoparties for markers
     $.ajax({
         url: '/json/party',
@@ -114,6 +87,7 @@ function map_go(search_string) {
 }
 
 $('#search_location_go').on('click', function () {
+    console.log($('#search_location_text').val());
     map_go($('#search_location_text').val());
 });
 
@@ -125,18 +99,10 @@ $('#search_location_form').on('submit', function () {
 
 $('#subscription_search_btn').on('click', function () {
     var address = $('#subscription_location_text').val();
-    geocoder.geocode({
-        'address': address
-    }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            gmap.setCenter(results[0].geometry.location);
-            gmap.setZoom(10);
-            $('[name=subscription_lat]').val(String(results[0].geometry.location.lat()));
-            $('[name=subscription_lon]').val(String(results[0].geometry.location.lng()));
-        } else {
-            console.log("geolocation error");
-        }
-    });
+    map_go(address);
+    console.log(String(map.getCenter()));
+    $('[name=subscription_lat]').val(String(map.getCenter().lat));
+    $('[name=subscription_lon]').val(String(map.getCenter().lng));  
     return false;
 });
 
@@ -167,7 +133,11 @@ $('#subscription_form').on('submit', function () {
                 $('#subscription_error').html("<div class=\"alert alert-error\">" +
                     "<strong>Oh no!</strong> Something was wrong. The server said: " + result + "</div>");
             }
-        }
+        },
+        error: function (result, status) {
+             $('#subscription_error').html("<div class=\"alert alert-error\">" +
+                    "<strong>Oh no!</strong> Something was wrong. The server said: " + result + "</div>");
+        },
     });
 
     return false;
