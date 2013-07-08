@@ -3,7 +3,6 @@ var geocoder;
 
 $(document).ready(function () {
 
-    var map;
     var ajaxRequest;
     var plotlist;
     var plotlayers = [];
@@ -94,16 +93,16 @@ $(document).ready(function () {
 
 // go to location
 
-function map_go(address) {
-    geocoder.geocode({
-        'address': address
-    }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            gmap.setCenter(results[0].geometry.location);
-            gmap.setZoom(10);
-        } else {
-            console.log("geolocation error");
-        }
+function map_go(search_string) {
+    search_uri = encodeURI(search_string);
+    $.ajax({
+            url: 'http://nominatim.openstreetmap.org/search/'+ search_uri +'?format=json',
+            method: 'GET',
+            success: function(result) {
+                    locations = result;
+                    target = new L.LatLng(locations[0].lat, locations[0].lon);
+                    map.setView(target, 10);
+            }
     });
 }
 
