@@ -58,9 +58,9 @@
         <div class="control-group">
         <label class="control-label" for="textinput">Additional Info URL</label>
         <div class="controls">
-        <input id="textinput" name="additional_info" placeholder="http://your-hackerpspace.org/wiki/Kryptofest" class="input-xlarge" type="text">
-        <p class="help-block">Link to a resource containing additional information on your party <br>
-        (wiki page, official announcement mail, etc...)</p>
+        <input id="textinput" name="additional_info" placeholder="https://www.cryptoparty.in/parties" class="input-xlarge" type="text">
+        <p class="help-block">Link to resources containing additional information on your party <br>
+        (Cryptoparty Wiki page link on https://www.cryptoparty.in, mailing list, etc...)</p>
         </div>
         </div>
 
@@ -69,7 +69,7 @@
         <label class="control-label" for="textinput">Street address</label>
         <div class="controls">
         <input id="textinput" name="street_address" placeholder="" class="input-xlarge" type="text">
-        <p class="help-block">We're using google's geocoder to find it, so it <br>doesn't hurt to be a bit more specific :)</p>
+        <p class="help-block">We're using OSM's Nominatim geocoder to find it, so it <br>doesn't hurt to be a bit more specific :)</p>
         </div>
         </div>
 
@@ -79,6 +79,15 @@
         <div class="controls">
         <input id="textinput" name="organizer_email" placeholder="foo@bar.de" class="input-xlarge" type="text">
         <p class="help-block">We will send you a confirmation link in an encrypted email.</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Twitter handle for your city's Cryptoparty</label>
+        <div class="controls">
+        <input id="textinput" name="organizer_twitter_handle" placeholder="@foobar" class="input-xlarge" type="text">
+        <p class="help-block">We will follow you from <a href="http://twitter.com/cryptoparty_">@Cryptoparty_</a>, please consider following us back!</p>
         </div>
         </div>
 

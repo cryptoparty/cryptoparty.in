@@ -32,6 +32,7 @@ class Party(Base):
     additional_info = Column(String)
     street_address = Column(String)
     organizer_email = Column(String)
+    organizer_twitter_handle = Column(String)
     position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
@@ -43,6 +44,7 @@ class Party(Base):
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email
+        self.organizer_twitter_handle = organizer_twitter_handle
         wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmed = False

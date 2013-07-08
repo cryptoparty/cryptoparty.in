@@ -52,6 +52,7 @@ def get_all_parties_as_json():
             'additional_info': p.additional_info,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
+            'organizer_twitter_handle': p.organizer_twitter_handle,
             'position': json.loads(g.db.scalar(p.position.ST_AsGeoJSON()))
         }
         parties_serialized.append(party_dict)
@@ -106,6 +107,13 @@ def json_subscription_add():
 
 
 @app.route('/subscription/confirm/<token>')
+
+#    name = TextField('Name', [Required()])
+
+def validate_name(form, field):
+    if len(field.data) > 50:
+        raise ValidationError('Name must be less than 50 characters')
+
 def web_subscription_confirm(token):
     s = g.db.query(Subscription).filter(Subscription.confirmation_token ==
                                         token).all()
@@ -132,8 +140,12 @@ def web_party_add():
         additional_info = TextField('Additional Info', [validators.required(),
                                     validators.URL()])
         street_address = TextField('Street address', [validators.required()])
+
         organizer_email = TextField('Your email address',
                                     [validators.required(), validators.Email()])
+
+        organizer_twitter_handle = TextField('Twitter handle for your city\'s Cryptoparty',
+                                    [validators.required(), validators.Regexp('/^[A-Za-z0-9_]{1,15}$/', flags=0, message=u'Invalid Twitter handle, did you forget the @?.')
         organizer_pubkey = FileField('Your GPG Public key')
 
     if request.method == 'GET':
