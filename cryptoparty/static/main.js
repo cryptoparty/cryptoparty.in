@@ -20,8 +20,8 @@ $(document).ready(function () {
 
     map.setView(new L.LatLng(48.37, 10.89), 1);
     map.addLayer(osm);
-    var marker = L.marker([51.5, -0.09]).addTo(map);
-    marker.bindPopup("<b>CryptopartyLondon!</b><br>Twitter: <a href=\"https://twitter.com/CryptoPartyLond\" target=\"_blank\">@CryptoPartyLond</a><br>Wiki: <a href=\"https://www.cryptoparty.in/london\" target=\"_blank\">london</a>");
+    //var marker = L.marker([51.5, -0.09]).addTo(map);
+    //marker.bindPopup("<b>CryptopartyLondon!</b><br>Twitter: <a href=\"https://twitter.com/CryptoPartyLond\" target=\"_blank\">@CryptoPartyLond</a><br>Wiki: <a href=\"https://www.cryptoparty.in/london\" target=\"_blank\">london</a>");
 
     var popup = L.popup();
     function onMapClick(e) {
@@ -41,32 +41,24 @@ $(document).ready(function () {
         map_go(default_location);
     }
 
-
-    });
-/*
     // get Cryptoparties for markers
     $.ajax({
         url: '/json/party',
         success: function (result) {
             parties = jQuery.parseJSON(result)
             $.each(parties, function (index, value) {
-                var ll = new google.maps.LatLng(value.position.coordinates[1], value.position.coordinates[0]);
-                console.log(ll);
-                var m = new google.maps.Marker({
-                    position: ll,
-                    map: gmap,
-                    title: value.name
-                });
-                var i = new google.maps.InfoWindow({
-                    content: '<p><h4>' + value.name + '</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p>' + '<p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>'
-                });
-                google.maps.event.addListener(m, 'click', function () {
-                    i.open(map, m);
-                });
+                var ll = new L.LatLng(value.position.coordinates[1], value.position.coordinates[0]);
+                var marker = new L.Marker(ll);
+                marker.bindPopup('<p><h4>' + value.name + '</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p>' + '<p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>');
+                marker.addTo(map);
+                               
             });
         }
     });
 
+    });
+/*
+    
 });
 */
 
