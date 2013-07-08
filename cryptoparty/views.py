@@ -145,7 +145,7 @@ def web_party_add():
                                     [validators.required(), validators.Email()])
 
         organizer_twitter_handle = TextField('Twitter handle for your city\'s Cryptoparty',
-                                    [validators.required(), validators.Regexp('/^[A-Za-z0-9_]{1,15}$/', flags=0, message=u'Invalid Twitter handle, did you forget the @?.')
+                                    [validators.required(), validators.Regexp('/^[A-Za-z0-9_]{1,15}$/', flags=0, message=u'Invalid Twitter handle, did you forget the @?.')])
         organizer_pubkey = FileField('Your GPG Public key')
 
     if request.method == 'GET':
