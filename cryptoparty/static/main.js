@@ -1,5 +1,4 @@
 var map;
-var geocoder;
 
 $(document).ready(function () {
 
