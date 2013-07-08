@@ -27,7 +27,7 @@ Now, you can head for a coffee, this will take a while. After vagrant is done, y
 
         vagrant ssh
         cd /vagrant
-        pip install -r requirements.txt
+        sudo pip install -r requirements.txt
         python manage.py initdb
         python manage.py runserver
         
