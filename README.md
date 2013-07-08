@@ -6,10 +6,6 @@ screenshot
 ----------
 ![](screenshot.png?raw=true)
 
-todo
------
- * remove <iframe> by just doing a POST in order to prevent XSS warnings / security problems with NGIX
-
 creating a development instance
 -------------------------------
 
