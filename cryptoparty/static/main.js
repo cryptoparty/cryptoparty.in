@@ -27,7 +27,8 @@ $(document).ready(function () {
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent("There ain't no party like a #Cryptoparty <br><br>It looks like there is no party at <b>" + e.latlng.toString() + "</b><br><br>Why don't you <a href=\"http://www.cryptoparty.in/parties/howto\" target=\"_blank\">host your own?</a>")
+            .setContent("There ain't no party like a #Cryptoparty <br><br>It looks like there is no party at <b>" + e.latlng.toString() + "</b><br><br>Why don't you <a href=\"#addParty\" data-toggle=\"modal\">host your own?</a>")
+
             .openOn(map);
     }
 
