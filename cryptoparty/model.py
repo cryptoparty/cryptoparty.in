@@ -20,7 +20,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 
 from cryptoparty.database import Base
-from cryptoparty.util import random_string
+from cryptoparty.util import random_string, get_twitter_avatar_url
 from geoalchemy2 import Geography
 
 
@@ -33,18 +33,21 @@ class Party(Base):
     street_address = Column(String)
     organizer_email = Column(String)
     organizer_twitter_handle = Column(String)
+    organizer_avatar_url = Column(String)
     position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
 
     def __init__(self, name, time, additional_info, street_address,
-                 organizer_email, lat, lon):
+                 organizer_email, organizer_twitter_handle, lat, lon):
         self.name = name
         self.time = time
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email
         self.organizer_twitter_handle = organizer_twitter_handle
+        self.organizer_avatar_url = get_twitter_avatar_url(
+            self.organizer_twitter_handle)
         wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmed = False

@@ -22,6 +22,9 @@ import random
 import urllib2
 import json
 
+from cryptoparty import app
+
+from twython import Twython
 
 def random_string(length):
     """
@@ -43,3 +46,23 @@ def geocode(address):
     res = json.loads(req.read())
     location = res['results'][0]['geometry']['location']
     return (location['lat'], location['lng'])
+
+
+def get_twitter_avatar_url(twitter_handle):
+    """
+    gets the icon URL for a given twitter handle from the API
+    """
+
+    app_key = app.config['TWITTER_APP_KEY']
+    app_secret = app.config['TWITTER_APP_SECRET']
+    if 'TWITTER_ACCESS_TOKEN' not in app.config:
+        access_token = Twython(app_key, app_secret, oauth_version=2)\
+            .obtain_access_token()
+        app.config['TWITTER_ACCESS_TOKEN'] = access_token
+    else:
+        access_token = app.config['TWITTER_ACCESS_TOKEN']
+
+    t = Twython(app_key, access_token=access_token)
+    user_obj = t.show_user(screen_name=twitter_handle)
+
+    return user_obj['profile_image_url']

@@ -5,3 +5,4 @@ geoalchemy2
 psycopg2
 wtforms
 python-gnupg
+twython
