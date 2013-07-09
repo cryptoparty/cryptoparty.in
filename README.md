@@ -18,10 +18,6 @@ This requires virtualbox and vagrant.
 cd into the cryptoparty.in folder and just
 
         vagrant up
-        
-Remember to make a new virtualenv:
-
-        mkvirtualenv cryptoparty
 
 Now, you can head for a coffee, this will take a while. After vagrant is done, you're nearly there. All you have to do is
 
