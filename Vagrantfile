@@ -5,9 +5,8 @@ $deplscript = <<SCRIPT
 echo installing dependencies...
 apt-get update
 apt-get install -y python-pip python-dev build-essential
-pip install --upgrade pip
-pip install -r /vagrant/requirements.txt
 apt-get install -y postgresql libpq-dev postgresql-9.1-postgis
+pip install -r /vagrant/requirements.txt
 echo setting up database
 su postgres
 sudo -u postgres /vagrant/scripts/create_testuser_and_database.sh
