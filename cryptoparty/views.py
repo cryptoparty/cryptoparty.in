@@ -53,6 +53,7 @@ def get_all_parties_as_json():
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
             'organizer_twitter_handle': p.organizer_twitter_handle,
+            'organizer_avatar_url': p.organizer_avatar_url,
             'position': json.loads(g.db.scalar(p.position.ST_AsGeoJSON()))
         }
         parties_serialized.append(party_dict)
