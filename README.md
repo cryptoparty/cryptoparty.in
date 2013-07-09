@@ -27,6 +27,9 @@ Now, you can head for a coffee, this will take a while. After vagrant is done, y
 
         vagrant ssh
         cd /vagrant
+
+and edit the file ```/vagrant/cryptoparty/config.py``` according to your needs.
+        
         python manage.py initdb
         python manage.py runserver
         
