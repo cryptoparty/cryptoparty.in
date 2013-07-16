@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptoparties.in - Find cryptoparties near you</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+  </head>
+  <body>
+    <div class="container">
+    <noscript>
+        <div class="alert"><strong>Oh, You don't like Javascript either.</strong> That's nice! But this site doesn't make much sense without it. So please switch to a reasonable broswer or add an exception in NoScript. Thanks!</div>
+    </noscript>
+    <div class="row">
+        <div class="span4">
+            <img src="{{ url_for('static', filename='CryptoPartyLogo.png') }}">
+            <h3><small>Yout're organizing a </small>Cryptoparty?</h3>
+            <p>That's awesome! Here's a list of things you can do to make it a success</p>
+            <ul>
+                    <li>lorem ipsum</li>
+                    <li>dolor sit amet</li>
+                    <li>Fabian</li>
+                    <li>So ein Scheissdreck</li>
+                    <li>I komm do nimmer raus!</li>
+                    <li>Aus dem Recordmodus</li>
+            </ul>
+        </div>
+        <div id="party_form" class="span8" style="height: 666px;">
+
+        <h1>Add a Cryptoparty!</h1>
+        {% if form.errors %}
+        <div class="alert alert-error"><ul>
+        {% for field in form.errors.keys() %}
+            <li><b>{{ form[field].label.text }}:</b> {{ form.errors[field][0] }}</li>
+        {% endfor %}
+        </ul></div>
+        {% endif %}
+
+        {% if success %}
+
+        <div class="alert alert-success"><strong>Thanks!</strong> You successfully submitted your Cryptoparty. All you have to do now is visit the link we emailed you. <a href="/">Take me back to the map</a></div>
+
+        {% endif %}
+
+        <form method="POST" url="" enctype="multipart/form-data">
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Event name</label>
+        <div class="controls">
+        <input id="textinput" name="name" placeholder="Kryptofest" class="input-xlarge" type="text">
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Time and date</label>
+        <div class="controls">
+
+        <div id="datetimepicker2" class="input-append">
+                <input name="date" data-format="dd-MM-yyyy hh:mm" type="text"></input>
+                <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                </i>
+                </span>
+        </div>
+
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Additional Info URL</label>
+        <div class="controls">
+        <input id="textinput" name="additional_info" placeholder="https://www.cryptoparty.in/parties" class="input-xlarge" type="text">
+        <p class="help-block">url to resources containing additional information about your party <br>
+        (Cryptoparty Wiki page, mailing list, etc...)</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Street address</label>
+        <div class="controls">
+        <input id="textinput" name="street_address" placeholder="" class="input-xlarge" type="text">
+        <p class="help-block">We're using OSM's Nominatim geocoder to find it, so it <br>doesn't hurt to be a bit more specific :)</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Your email address</label>
+        <div class="controls">
+        <input id="textinput" name="organizer_email" placeholder="foo@bar.de" class="input-xlarge" type="text">
+        <p class="help-block">We will send you a confirmation link in an encrypted email.</p>
+        </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+        <label class="control-label" for="textinput">Twitter handle for your city's Cryptoparty (without the @)</label>
+        <div class="controls">
+        <input id="textinput" name="organizer_twitter_handle" placeholder="foobar" class="input-xlarge" type="text">
+        <p class="help-block">We will follow you from <a href="http://twitter.com/cryptoparty_">@Cryptoparty_</a>, please consider following us back!</p>
+        </div>
+        </div>
+
+        <!-- File Button --> 
+        <div class="control-group">
+        <label class="control-label" for="filebutton">Your PGP Publickey (ASCII-armored)</label>
+        <div class="controls">
+        <input id="filebutton" name="organizer_pubkey" class="input-file" type="file">
+        <p class="help-block">We will encrypt the verification email with that key, so make sure <br>you control the private key as well.</p>
+        </div>
+        </div>
+
+        <div class="control-group">
+                <input type="submit" class="btn btn-primary" value="Add Party">
+        </div> 
+        </fieldset>
+        </form>
+
+
+    </div>
+    <script src="/static/jquery-2.0.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+            $(document).ready(function() {
+                $('#datetimepicker2').datetimepicker({
+                    language: 'en',
+                    pick12HourFormat: false,
+                    pickSeconds: false
+                });
+            });
+    </script>
+
+
+
+        </div>      
+   </div>
+
+  </body>
+</html>

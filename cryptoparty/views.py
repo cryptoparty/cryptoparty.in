@@ -151,12 +151,12 @@ def web_party_add():
 
     if request.method == 'GET':
         form = AddPartyForm()
-        return render_template("add_party.html", form=form)
+        return render_template("add_party_new.html", form=form)
 
     ## check input
     form = AddPartyForm(request.form)
     if not form.validate():
-        return render_template("add_party.html", form=form)
+        return render_template("add_party_new.html", form=form)
 
     ## get and check gpg key
     temp_keyring_file = '/tmp/' + random_string(length=8) + '.asc'
@@ -166,7 +166,7 @@ def web_party_add():
 
     if len(result.fingerprints) != 1:
         form.errors['organizer_pubkey'] = ["Your publickey could not be imported"]
-        return render_template("add_party.html", form=form)
+        return render_template("add_party_new.html", form=form)
 
     organizer_fingerprint = result.fingerprints[0]
 
@@ -198,7 +198,7 @@ def web_party_add():
     mail.send(msg)
     # TODO delete file in /tmp
 
-    return render_template("add_party.html", success=True, form=form)
+    return render_template("add_party_new.html", success=True, form=form)
 
 
 @app.route('/party/confirm/<token>')
@@ -239,6 +239,8 @@ def web_party_confirm(token):
         with mail.connect() as conn:
             for m in mails:
                 conn.send(m)
+
+        party_coords = json.loads(g.db.scalar(p[0].position.ST_AsGeoJSON()))['coordinates']
 
         return render_template("confirm.html", success=True,
                                msg="Your e-mail address is now " +
