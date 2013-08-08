@@ -51,7 +51,12 @@ $(document).ready(function () {
                 var ll = new L.LatLng(value.position.coordinates[1], value.position.coordinates[0]);
                 var ico = new L.Icon({iconUrl: value.organizer_avatar_url, iconSize: [48,48]});
                 var marker = new L.Marker(ll, {icon: ico});
-                marker.bindPopup('<p><h4>' + value.name + '</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p>' + '<p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>' + '<p><b>Organizer\'s Twitter: </b><a href="https://twitter.com/' + value.organizer_twitter_handle + '">@'+value.organizer_twitter_handle + '</a></p>');
+                if(value.organizer_twitter_handle != "") {
+                    twitter_segment = '<p><b>Organizer\'s Twitter: </b><a href="https://twitter.com/' + value.organizer_twitter_handle + '">@'+value.organizer_twitter_handle     + '</a></p>';
+                } else {
+                    twitter_segment = '';
+                }
+                marker.bindPopup('<p><h4>' + value.name + '</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p>' + '<p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>' + twitter_segment);
                 marker.addTo(map);
                                
             });
