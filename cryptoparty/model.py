@@ -46,8 +46,11 @@ class Party(Base):
         self.street_address = street_address
         self.organizer_email = organizer_email
         self.organizer_twitter_handle = organizer_twitter_handle
-        self.organizer_avatar_url = get_twitter_avatar_url(
-            self.organizer_twitter_handle)
+        if not self.organizer_twitter_handle:
+            self.organizer_avatar_url = '/static/avatar.png'
+        else:
+            self.organizer_avatar_url = get_twitter_avatar_url(
+                self.organizer_twitter_handle)
         wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmed = False

@@ -145,7 +145,7 @@ def web_party_add():
                                     [validators.required(), validators.Email()])
 
         organizer_twitter_handle = TextField('Twitter handle for your city\'s Cryptoparty',
-                                    [validators.required()])
+                                    [])
 
     if request.method == 'GET':
         form = AddPartyForm()
