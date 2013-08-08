@@ -29,7 +29,6 @@ from cryptoparty.util import random_string, geocode
 from flask import render_template, g, request
 from wtforms import Form, TextField, FileField, DateTimeField, validators
 from flask.ext.mail import Message
-import gnupg
 
 EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
 
@@ -147,7 +146,6 @@ def web_party_add():
 
         organizer_twitter_handle = TextField('Twitter handle for your city\'s Cryptoparty',
                                     [])
-        organizer_pubkey = FileField('Your GPG Public key')
 
     if request.method == 'GET':
         form = AddPartyForm()
@@ -157,18 +155,6 @@ def web_party_add():
     form = AddPartyForm(request.form)
     if not form.validate():
         return render_template("add_party_new.html", form=form)
-
-    ## get and check gpg key
-    temp_keyring_file = '/tmp/' + random_string(length=8) + '.asc'
-    gpg = gnupg.GPG(keyring=temp_keyring_file)
-
-    result = gpg.import_keys(request.files['organizer_pubkey'].read())
-
-    if len(result.fingerprints) != 1:
-        form.errors['organizer_pubkey'] = ["Your publickey could not be imported"]
-        return render_template("add_party_new.html", form=form)
-
-    organizer_fingerprint = result.fingerprints[0]
 
     ## create and save party object
 
@@ -183,20 +169,16 @@ def web_party_add():
     g.db.add(p)
     g.db.commit()
 
-    ## encrypt mail
     msg_body = render_template("mail/confirm_party.txt",
                                token=p.confirmation_token)
 
-    encrypted_mail = gpg.encrypt(msg_body, [organizer_fingerprint],
-                                 always_trust=True)
     ## send
     msg = Message(subject="cryptoparty.in email address confirmation",
-                  body=str(encrypted_mail),
+                  body=str(msg_body),
                   sender="noreply@cryptoparty.in",
                   recipients=[p.organizer_email])
 
     mail.send(msg)
-    # TODO delete file in /tmp
 
     return render_template("add_party_new.html", success=True, form=form)
 
