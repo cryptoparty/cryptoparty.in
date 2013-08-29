@@ -19,7 +19,7 @@
 
 import string
 import random
-import urllib2
+import urllib
 import json
 
 from cryptoparty import app

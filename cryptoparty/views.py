@@ -65,7 +65,7 @@ def json_subscription_add():
     try:
         formdata = request.form['data']
         form_dict = json.loads(formdata)
-    except Exception, e:
+    except Exception as e:
         return 'Error! ' + str(e)
     if form_dict['lat'] == "" or form_dict['lon'] == "":
         return 'Error! No location selected.'
@@ -74,16 +74,16 @@ def json_subscription_add():
     try:
         lon = float(form_dict['lon'])
         lat = float(form_dict['lat'])
-    except KeyError, e:
+    except KeyError as e:
         return 'Error! ' + str(e)
-    except ValueError, e:
+    except ValueError as e:
         return 'Error! ' + str(e)
 
     # check email address
     try:
         if not EMAIL_REGEX.match(form_dict['email']):
             return 'Error: invalid Email address'
-    except KeyError, e:
+    except KeyError as e:
         return 'Error! ' + str(e)
 
     # create and store Subscription Object
@@ -100,7 +100,7 @@ def json_subscription_add():
         recipients=[s.email])
     try:
         mail.send(msg)
-    except Exception, e:
+    except Exception as e:
         return 'error sending mail'
 
     return 'OK'

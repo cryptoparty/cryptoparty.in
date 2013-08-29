@@ -48,4 +48,4 @@ if __name__ == '__main__':
         elif a.command == 'initdb':
             initdb()
         else:
-            print "Unknown command specified, kthxbai."
+            print("Unknown command specified, kthxbai.")
