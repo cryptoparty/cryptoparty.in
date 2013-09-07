@@ -106,14 +106,13 @@ def json_subscription_add():
     return 'OK'
 
 
-@app.route('/subscription/confirm/<token>')
 
 #    name = TextField('Name', [Required()])
-
 def validate_name(form, field):
     if len(field.data) > 50:
         raise ValidationError('Name must be less than 50 characters')
 
+@app.route('/subscription/confirm/<token>')
 def web_subscription_confirm(token):
     s = g.db.query(Subscription).filter(Subscription.confirmation_token ==
                                         token).all()

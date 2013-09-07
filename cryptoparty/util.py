@@ -39,11 +39,12 @@ def geocode(address):
     """
     takes an address string and returns a (lat, lng) tuple
     """
-    url_encoded_address = urllib2.quote(address.encode('utf-8'))
+    url_encoded_address = urllib.parse.quote(address)
+    #url_encoded_address = urllib.parse.quote(address.encode('utf-8'))
     geocode_url = "http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false" % url_encoded_address
 
-    req = urllib2.urlopen(geocode_url)
-    res = json.loads(req.read())
+    req = urllib.request.urlopen(geocode_url)
+    res = json.loads(req.read().decode('utf-8'))
     location = res['results'][0]['geometry']['location']
     return (location['lat'], location['lng'])
 
