@@ -76,9 +76,13 @@ function map_go(search_string) {
     search_uri = encodeURI(search_string);
     $.ajax({
             url: 'http://nominatim.openstreetmap.org/search/'+ search_uri +'?format=json',
+	    dataType: 'json',
             method: 'GET',
             success: function(result) {
                     locations = result;
+                    lon = locations[0].lon;
+                    lat = locations[0].lat;
+                    console.log(lon+" "+lat);
                     target = new L.LatLng(locations[0].lat, locations[0].lon);
                     map.setView(target, 10);
             }
