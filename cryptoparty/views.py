@@ -51,7 +51,6 @@ def get_all_parties_as_json():
             'additional_info': p.additional_info,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
-            'organizer_twitter_handle': p.organizer_twitter_handle,
             'organizer_avatar_url': p.organizer_avatar_url,
             'position': json.loads(g.db.scalar(p.position.ST_AsGeoJSON()))
         }
@@ -143,9 +142,6 @@ def web_party_add():
         organizer_email = TextField('Your email address',
                                     [validators.required(), validators.Email()])
 
-        organizer_twitter_handle = TextField('Twitter handle for your city\'s Cryptoparty',
-                                    [])
-
     if request.method == 'GET':
         form = AddPartyForm()
         return render_template("add_party_new.html", form=form)
@@ -163,7 +159,6 @@ def web_party_add():
               additional_info=form.additional_info.data,
               street_address=form.street_address.data,
               organizer_email=form.organizer_email.data,
-              organizer_twitter_handle=form.organizer_twitter_handle.data,
               lat=party_location[0], lon=party_location[1])
     g.db.add(p)
     g.db.commit()
@@ -204,6 +199,7 @@ def web_party_confirm(token):
             all()
 
         mails = []
+
 
         # construct mails
 

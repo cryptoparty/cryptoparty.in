@@ -32,25 +32,19 @@ class Party(Base):
     additional_info = Column(String)
     street_address = Column(String)
     organizer_email = Column(String)
-    organizer_twitter_handle = Column(String)
     organizer_avatar_url = Column(String)
     position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
 
     def __init__(self, name, time, additional_info, street_address,
-                 organizer_email, organizer_twitter_handle, lat, lon):
+                 organizer_email, lat, lon):
         self.name = name
         self.time = time
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email
-        self.organizer_twitter_handle = organizer_twitter_handle
-        if organizer_twitter_handle != '':
-            self.organizer_avatar_url = get_twitter_avatar_url(
-                self.organizer_twitter_handle)
-        else:
-            self.organizer_avatar_url = '/static/generic_avatar.png'
+        self.organizer_avatar_url = '/static/generic_avatar.png'
         wkt_pos = "POINT(%f %f)" % (lon, lat)
         self.position = wkt_pos
         self.confirmed = False
