@@ -4,9 +4,10 @@
 $deplscript = <<SCRIPT
 echo installing dependencies...
 apt-get update
-apt-get install -y python-pip python-dev build-essential
+apt-get install -y python3 python3-dev build-essential python3-setuptools
+easy_install3 pip
 apt-get install -y postgresql libpq-dev postgresql-9.1-postgis
-pip install -r /vagrant/requirements.txt
+pip-3.3 install -r /vagrant/requirements.txt
 echo setting up database
 su postgres
 sudo -u postgres /vagrant/scripts/create_testuser_and_database.sh
@@ -18,8 +19,8 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
-  config.vm.box = "precise32"
+  config.vm.box_url = "http://goo.gl/ceHWg"
+  config.vm.box = "raring64"
 
   config.vm.provision :shell, :inline => $deplscript
 
