@@ -20,7 +20,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 
 from cryptoparty.database import Base
-from cryptoparty.util import random_string, get_twitter_avatar_url
+from cryptoparty.util import random_string
 from geoalchemy2 import Geography
 
 
