@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptoparties.in - Find cryptoparties near you</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+  </head>
+  <body>
+    <div class="navbar">
+        <!-- empty div for top padding -->
+    </div>
+ 
+    <div clas
+    <div class="container">
+    <noscript>
+        <div class="alert"><strong>Oh, You don't like Javascript either.</strong> That's nice! But this site doesn't make much sense without it. So please switch to a reasonable broswer or add an exception in NoScript. Thanks!</div>
+    </noscript>
+    <div class="row">
+        <div class="span4">
+            <img src="{{ url_for('static', filename='CryptoPartyLogo.png') }}">
+            <h3><small>Yout're organizing a </small>Cryptoparty?</h3>
+            <p>That's awesome! Here's a list of things you can do to make it a success</p>
+            <ul>
+                    <li>lorem ipsum</li>
+                    <li>dolor sit amet</li>
+                    <li>Fabian</li>
+                    <li>So ein Scheissdreck</li>
+                    <li>I komm do nimmer raus!</li>
+                    <li>Aus dem Recordmodus</li>
+            </ul>
+        </div>
+        <div id="party_form" class="span8" style="height: 666px;">
+
+        <h1>Past Cryptoparties</h1>
+
+        {% if parties.objects|count > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Event title</th>
+                    <th>Date and time</th>
+                    <th>Address</th>
+                    <th>Additional Info</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in parties.objects %}
+                <tr>
+                    <td> {{ p.name }} </td>
+                    <td> {{ p.time.strftime("%d.%m.%Y, %H:%M") }} </td>
+                    <td> {{ p.street_address }} </td>
+                    <td> <a href="{{p.additional_info}}">[link]</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p align="center">
+        {% if not parties.first_page %}<a href="/party/archive/page/{{parties.page_number - 1}}">&lt;{% endif %}{% for i in range(1,parties.total_pages+1) %} <a href="/party/archive/page/{{i}}">{% if i == parties.page_number %}<b>{{ i }}</b>{% else %}{{ i }}{% endif %}</a> {% endfor %} {% if not parties.last_page %}<a href="/party/archive/page/{{parties.page_number + 1}}">&gt;</a>{% endif %}
+        </p>
+
+        {% else %}
+        <p>Sorry, there are no cryptoparties in the archive</p>
+        {% endif %}        
+
+   </div>
+
+  <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

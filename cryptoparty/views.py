@@ -236,3 +236,14 @@ def party_archive(page=1):
 
     return render_template("archive.html", parties=Pagination(
         query=parties_query, objects_per_page=30, page_number=page))
+
+
+@app.route('/party/upcoming')
+@app.route('/party/upcoming/page/<int:page>')
+def party_upcoming(page=1):
+    parties_query = g.db.query(Party).\
+            filter(Party.time >= datetime.now()).\
+            filter(Party.confirmed)
+
+    return render_template("upcoming.html", parties=Pagination(
+        query=parties_query, objects_per_page=30, page_number=page))
