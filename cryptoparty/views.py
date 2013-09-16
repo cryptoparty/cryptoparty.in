@@ -24,7 +24,7 @@ from datetime import datetime
 from cryptoparty import app
 from cryptoparty.model import Party, Subscription
 from cryptoparty import mail
-from cryptoparty.util import random_string, geocode
+from cryptoparty.util import random_string, geocode, Pagination
 
 from flask import render_template, g, request
 from wtforms import Form, TextField, FileField, DateTimeField, validators
@@ -225,3 +225,14 @@ def web_party_confirm(token):
     else:
         return render_template("confirm.html", success=False,
                                msg="No Party to confirm.")
+
+
+@app.route('/party/archive')
+@app.route('/party/archive/page/<int:page>')
+def party_archive(page=1):
+    parties_query = g.db.query(Party).\
+            filter(Party.time < datetime.now()).\
+            filter(Party.confirmed)
+
+    return render_template("archive.html", parties=Pagination(
+        query=parties_query, objects_per_page=30, page_number=page))

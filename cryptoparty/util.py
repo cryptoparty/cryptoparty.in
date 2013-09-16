@@ -21,6 +21,7 @@ import string
 import random
 import urllib
 import json
+from math import ceil
 
 from cryptoparty import app
 
@@ -47,3 +48,29 @@ def geocode(address):
     res = json.loads(req.read().decode('utf-8'))
     location = res['results'][0]['geometry']['location']
     return (location['lat'], location['lng'])
+
+class Pagination(object):
+    def __init__(self, query, objects_per_page, page_number):
+        self.objects_per_page = objects_per_page
+        self.page_number = page_number
+        self.total_count = query.count()
+        self.objects = query.offset(objects_per_page * (page_number - 1)).\
+                                    limit(objects_per_page).all()
+
+    @property
+    def first_page(self):
+        if self.page_number < 2:
+            return True
+        else:
+            return False
+
+    @property
+    def last_page(self):
+        if self.page_number < self.total_pages:
+            return False
+        else:
+            return True
+
+    @property
+    def total_pages(self):
+        return ceil(self.total_count / self.objects_per_page)
