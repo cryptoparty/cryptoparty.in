@@ -30,3 +30,15 @@ and edit the file ```/vagrant/cryptoparty/config.py``` according to your needs.
         python manage.py runserver
         
 That's it. Fire up your browser and point it to http://localhost:5001 and you're there!
+
+shutting down the development instance
+--------------------------------------
+If you want to shut down the running machine Vagrant is managing first exit from the vagrant ssh session and return to your nomal shell, where you should still be in the cryptoparty.in directory then
+
+        vagrant halt
+        
+destroying the development instance
+-----------------------------------
+and if you want to stop the running machine Vagrant is managing and destroy all resources that were created during the machine creation process:
+
+        vagrant destroy
