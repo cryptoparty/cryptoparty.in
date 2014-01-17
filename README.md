@@ -33,7 +33,7 @@ That's it. Fire up your browser and point it to http://localhost:5001 and you're
 
 shutting down the development instance
 --------------------------------------
-If you want to shut down the running machine Vagrant is managing first exit from the vagrant ssh session and return to your nomal shell, where you should still be in the cryptoparty.in directory then
+If you want to shut down the running machine Vagrant is managing first exit from the vagrant ssh session and return to your normal shell, where you should still be in the cryptoparty.in directory then
 
         vagrant halt
         
