@@ -167,12 +167,13 @@ def web_party_add():
                                token=p.confirmation_token)
 
     # send
-    msg = Message(subject="cryptoparty.in email address confirmation",
-                  body=str(msg_body),
-                  sender="noreply@cryptoparty.in",
-                  recipients=[p.organizer_email])
-
-    mail.send(msg)
+    #todo uncomment these lines which have been commented for development to allow parties to be added without a mail server being setup see READMEDevelopers.md for more information
+#    msg = Message(subject="cryptoparty.in email address confirmation",
+#                  body=str(msg_body),
+#                  sender="noreply@cryptoparty.in",
+#                  recipients=[p.organizer_email])
+#
+#    mail.send(msg)
 
     return render_template("add_party_new.html", success=True, form=form)
 
