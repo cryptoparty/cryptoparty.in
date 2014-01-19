@@ -47,7 +47,7 @@ def get_all_parties_as_json():
     for p in parties:
         party_dict = {
             'name': p.name,
-            'time': p.time.strftime("%c"),
+            'time': p.time.strftime("%a %b %d %Y %H:%I"), #Fri Aug 9 2013 14:37".
             'additional_info': p.additional_info,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
@@ -166,7 +166,7 @@ def web_party_add():
     msg_body = render_template("mail/confirm_party.txt",
                                token=p.confirmation_token)
 
-    ## send
+    # send
     msg = Message(subject="cryptoparty.in email address confirmation",
                   body=str(msg_body),
                   sender="noreply@cryptoparty.in",
