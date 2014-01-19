@@ -51,14 +51,14 @@ test=> SELECT confirmation_token from "Parties";
 Now finally we can see the Parties that we have added actually on the map!
 
 Note: to help with this workaround the following code in views.py was temporarily commented out (todo: this might be better as a debug flag):
-
+<pre>
 #    msg = Message(subject="cryptoparty.in email address confirmation",
 #                  body=str(msg_body),
 #                  sender="noreply@cryptoparty.in",
 #                  recipients=[p.organizer_email])
 #
 #    mail.send(msg)
-
+</pre>
 extra notes on psql
 -------------------
 
