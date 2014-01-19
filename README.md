@@ -26,8 +26,8 @@ Now, you can head for a coffee, this will take a while. After vagrant is done, y
 
 and edit the file ```/vagrant/cryptoparty/config.py``` according to your needs.
         
-        python manage.py initdb
-        python manage.py runserver
+        python3 manage.py initdb
+        python3 manage.py runserver
         
 That's it. Fire up your browser and point it to http://localhost:5001 and you're there!
 
