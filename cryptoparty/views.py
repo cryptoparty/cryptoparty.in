@@ -29,6 +29,8 @@ from cryptoparty.util import random_string, geocode, Pagination
 from flask import render_template, g, request
 from wtforms import Form, TextField, FileField, DateTimeField, validators
 from flask.ext.mail import Message
+from werkzeug.contrib.atom import AtomFeed
+
 
 EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
 
@@ -57,6 +59,21 @@ def get_all_parties_as_json():
         parties_serialized.append(party_dict)
     return json.dumps(parties_serialized)
 
+
+@app.route('/feeds/atom')
+def feed():
+    feed = AtomFeed('Upcoming Cryptoparties',
+                    feed_url=request.url, url=request.url_root)
+    parties = g.db.query(Party).filter(Party.time > datetime.now()).\
+        filter(Party.confirmed).all()
+    for party in parties:
+        text_content = '<h4>' + party.name + '</h4></p>' + '<p><b>Street Address: </b>' + party.street_address + '</p>' + '<p><b>Date: </b>' + party.time.strftime("%a %b %d %Y %H:%I") + '</p>' + '<p><b>Additional Info: </b><a href="' + party.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + party.organizer_email + '</p>'
+        feed.add(
+            party.name, text_content,
+            url=party.additional_info,
+            updated = party.time, # this should be the datetime the event was added, but we don't store that
+            )
+    return feed.get_response()
 
 @app.route('/json/subscription/add', methods=['POST'])
 def json_subscription_add():
