@@ -33,7 +33,7 @@
         </div>
         <div id="party_form" class="span8" style="height: 666px;">
 
-        <h1>Past Cryptoparties</h1>
+        <h1>Upcoming Cryptoparties</h1>
 
         {% if parties.objects|count > 0 %}
         <table class="table">
@@ -62,7 +62,8 @@
         </p>
 
         {% else %}
-        <p>Sorry, there are no cryptoparties in the archive</p>
+        <p>Sorry, there are no cryptoparties scheduled. Why don't you <a href="http://www.cryptoparty.in/parties/howto">host your own?</a>
+</p>
         {% endif %}        
 
    </div>
