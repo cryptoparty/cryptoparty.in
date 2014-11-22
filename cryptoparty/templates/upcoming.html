@@ -22,7 +22,11 @@
     <div class="row">
         <div class="span4">
             <a href="/"><img src="{{ url_for('static', filename='CryptoPartyLogo.png') }}"></a>
-            <h3><small>Yout're organizing a </small>Cryptoparty?</h3>
+
+	    <h3>Keep Informed</h3>
+	    To make sure you don't miss anything, you can keep track of upcoming events through our <a href="/feeds/atom">feed</a> or <a href="/feeds/ics/upcoming">ICS calendar</a>
+
+            <h3><small>You're organizing a </small>Cryptoparty?</h3>
             <p>That's awesome! Here's a list of things you can do to make it a success</p>
             <ul>
                     <li>lorem ipsum</li>
@@ -53,7 +57,7 @@
                     <td> {{ p.name }} </td>
                     <td> {{ p.time.strftime("%d.%m.%Y, %H:%M") }} </td>
                     <td> {{ p.street_address }} </td>
-                    <td> <a href="{{p.additional_info}}">[link]</a> </td>
+                    <td> <a href="{{p.additional_info}}">[link]</a>&nbsp;&nbsp; <a href="/feeds/ics/{{p.id}}" title="Use this link to copy the event into your calendar">[ics]</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
