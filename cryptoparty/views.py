@@ -20,13 +20,14 @@
 import re
 import json
 from datetime import datetime
+import icalendar
 
 from cryptoparty import app
 from cryptoparty.model import Party, Subscription
 from cryptoparty import mail
 from cryptoparty.util import random_string, geocode, Pagination
 
-from flask import render_template, g, request
+from flask import render_template, g, request, Response, abort
 from wtforms import Form, TextField, FileField, DateTimeField, validators
 from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
@@ -265,3 +266,38 @@ def party_upcoming(page=1):
 
     return render_template("upcoming.html", parties=Pagination(
         query=parties_query, objects_per_page=30, page_number=page))
+
+
+
+def parties_ical(parties, summary="Upcoming Cryptoparties"):
+    """
+    ical feed for all upcoming
+    
+    TODO: it'd be nice if we could generate location-based feeds
+     i.e. give me an iCal feed of all events within 50km of [city]
+    """
+    cal = icalendar.Calendar()
+    cal["summary"] = summary
+    for party in parties:
+        event = icalendar.Event()
+        event.add('uid', party.id)
+        event.add('dtstart', party.time)
+        event.add('summary', party.street_address)
+        event.add('url', party.additional_info)
+        # TODO: add titles here
+        cal.add_component(event)
+    return Response(cal.to_ical(), mimetype="text/calendar")
+
+@app.route('/feeds/ics/upcoming')
+def parties_all():
+    parties = g.db.query(Party).filter(Party.time > datetime.now()).\
+        filter(Party.confirmed).all()
+    return parties_ical(parties, "Upcoming Cryptoparties")
+
+@app.route('/feeds/ics/<int:party_id>')
+def parties_single(party_id):
+    party = Party.query.get(party_id)
+    if not (party and party.confirmed):
+        abort(404)
+    return parties_ical([party], "Upcoming Cryptoparty")
+

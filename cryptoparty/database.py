@@ -39,6 +39,7 @@ def init_db():
     import cryptoparty.model
     Base.metadata.create_all(bind=engine)
 
+
 from cryptoparty import app
 
 @app.before_request
