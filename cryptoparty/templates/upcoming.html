@@ -5,6 +5,8 @@
     <!-- Bootstrap -->
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="alternate" type="application/atom+xml" title="Upcoming Cryptoparties" href="/feeds/atom"/>
+
 
   </head>
   <body>
@@ -33,7 +35,7 @@
         </div>
         <div id="party_form" class="span8" style="height: 666px;">
 
-        <h1>Upcoming Cryptoparties</h1>
+        <h1>Upcoming Cryptoparties <a href="/feeds/atom"><img src="/static/images/feed-icon-28x28.png" alt="ATOM feed for upcoming events"/></a></h1>
 
         {% if parties.objects|count > 0 %}
         <table class="table">
