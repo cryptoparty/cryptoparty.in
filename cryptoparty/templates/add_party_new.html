@@ -15,7 +15,7 @@
     <div clas
     <div class="container">
     <noscript>
-        <div class="alert"><strong>Oh, You don't like Javascript either.</strong> That's nice! But this site doesn't make much sense without it. So please switch to a reasonable broswer or add an exception in NoScript. Thanks!</div>
+        <div class="alert"><strong>Oh, You don't like Javascript either.</strong> That's nice! But this site doesn't make much sense without it. So please switch to a reasonable browser or add an exception in NoScript. Thanks!</div>
     </noscript>
     <div class="row">
         <div class="span4">
@@ -53,7 +53,7 @@
         <div class="control-group">
         <label class="control-label" for="textinput">Event name</label>
         <div class="controls">
-        <input id="textinput" name="name" placeholder="Kryptofest" class="input-xlarge" type="text">
+	{{ form.name(class_="input-xlarge", placeholder="Kryptofest") }}
         </div>
         </div>
 
@@ -63,8 +63,8 @@
         <div class="controls">
 
         <div id="datetimepicker2" class="input-append">
-                <input name="date" data-format="dd-MM-yyyy hh:mm" type="text"></input>
-                <span class="add-on">
+  {{ form.date(**{"data-format": "dd-MM-yyyy hh:mm"}) }}
+                                <span class="add-on">
                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                 </i>
                 </span>
@@ -77,7 +77,7 @@
         <div class="control-group">
         <label class="control-label" for="textinput">Additional Info URL</label>
         <div class="controls">
-        <input id="textinput" name="additional_info" placeholder="https://www.cryptoparty.in/parties" class="input-xlarge" type="text">
+	{{ form.additional_info(class_="input-xlarge", placeholder="https://www.cryptoparty.in/parties") }}
         <p class="help-block">url to resources containing additional information about your party <br>
         (Cryptoparty Wiki page, mailing list, etc...)</p>
         </div>
@@ -87,7 +87,7 @@
         <div class="control-group">
         <label class="control-label" for="textinput">Street address</label>
         <div class="controls">
-        <input id="textinput" name="street_address" placeholder="" class="input-xlarge" type="text">
+	{{ form.street_address(class_="input-xlarge", placeholder="") }}
         <p class="help-block">We're using OSM's Nominatim geocoder to find it, so it <br>doesn't hurt to be a bit more specific :)</p>
         </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="control-group">
         <label class="control-label" for="textinput">Your email address</label>
         <div class="controls">
-        <input id="textinput" name="organizer_email" placeholder="foo@bar.de" class="input-xlarge" type="text">
+	{{ form.organizer_email(class_="input-xlarge", placeholder="foo@bar.de") }}
         <p class="help-block">We will send you a confirmation link in an encrypted email.</p>
         </div>
         </div>

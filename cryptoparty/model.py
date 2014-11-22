@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Unicode
 
 from cryptoparty.database import Base
 from cryptoparty.util import random_string
@@ -27,10 +27,10 @@ from geoalchemy2 import Geography
 class Party(Base):
     __tablename__ = 'Parties'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(Unicode)
     time = Column(DateTime)
     additional_info = Column(String)
-    street_address = Column(String)
+    street_address = Column(Unicode)
     organizer_email = Column(String)
     organizer_avatar_url = Column(String)
     position = Column(Geography('POINT', srid=4326))
