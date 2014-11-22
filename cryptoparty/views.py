@@ -28,7 +28,8 @@ from cryptoparty import mail
 from cryptoparty.util import random_string, geocode, Pagination
 
 from flask import render_template, g, request, Response, abort
-from wtforms import Form, TextField, FileField, DateTimeField, validators, ValidationError
+from wtforms import (Form, TextField, FileField, DateTimeField, validators,
+                     ValidationError, TextAreaField)
 from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 
@@ -52,6 +53,7 @@ def get_all_parties_as_json():
             'name': p.name,
             'time': p.time.strftime("%a %b %d %Y %H:%I"), #Fri Aug 9 2013 14:37".
             'additional_info': p.additional_info,
+            'description': p.description,
             'street_address': p.street_address,
             'organizer_email': p.organizer_email,
             'organizer_avatar_url': p.organizer_avatar_url,
@@ -68,7 +70,7 @@ def feed():
     parties = g.db.query(Party).filter(Party.time > datetime.now()).\
         filter(Party.confirmed).all()
     for party in parties:
-        text_content = '<h4>' + party.name + '</h4></p>' + '<p><b>Street Address: </b>' + party.street_address + '</p>' + '<p><b>Date: </b>' + party.time.strftime("%a %b %d %Y %H:%I") + '</p>' + '<p><b>Additional Info: </b><a href="' + party.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + party.organizer_email + '</p>'
+        text_content = '<h4>' + party.name + '</h4></p>' + '<p><b>Street Address: </b>' + party.street_address + '</p>' + '<p><b>Date: </b>' + party.time.strftime("%a %b %d %Y %H:%I") + '</p><p><b>Description: </b>' + party.description + '<p><b>Additional Info: </b><a href="' + party.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + party.organizer_email + '</p>'
         feed.add(
             party.name, text_content,
             url=party.additional_info,
@@ -153,7 +155,8 @@ def web_party_add():
         name = TextField('Event name', [validators.required()])
         date = DateTimeField('Time and date', [validators.required(), date_in_future],
                              format='%d-%m-%Y %H:%M')
-        additional_info = TextField('Additional Info', [validators.required(),
+        description = TextAreaField('Description', default="")
+        additional_info = TextField('URL', [validators.required(),
                                     validators.URL()])
         street_address = TextField('Street address', [validators.required()])
 
@@ -174,6 +177,7 @@ def web_party_add():
     party_location = geocode(form.street_address.data)
 
     p = Party(name=form.name.data, time=form.date.data,
+              description=form.description.data,
               additional_info=form.additional_info.data,
               street_address=form.street_address.data,
               organizer_email=form.organizer_email.data,
@@ -282,7 +286,8 @@ def parties_ical(parties, summary="Upcoming Cryptoparties"):
         event = icalendar.Event()
         event.add('uid', party.id)
         event.add('dtstart', party.time)
-        event.add('summary', party.street_address)
+        event.add('summary', party.description)
+        event.add('location', party.street_address)
         event.add('url', party.additional_info)
         # TODO: add titles here
         cal.add_component(event)

@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Unicode
+from sqlalchemy import (Column, Integer, String, DateTime, Float,
+                        Boolean, Unicode, UnicodeText)
 
 from cryptoparty.database import Base
 from cryptoparty.util import random_string
@@ -29,6 +30,7 @@ class Party(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode)
     time = Column(DateTime)
+    description = Column(UnicodeText, default="")
     additional_info = Column(String)
     street_address = Column(Unicode)
     organizer_email = Column(String)
@@ -38,9 +40,10 @@ class Party(Base):
     confirmation_token = Column(String)
 
     def __init__(self, name, time, additional_info, street_address,
-                 organizer_email, lat, lon):
+                 organizer_email, lat, lon, description):
         self.name = name
         self.time = time
+        self.description = description
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email

@@ -33,6 +33,7 @@ Upcoming Cryptoparties
                     <th>Event title</th>
                     <th>Date and time</th>
                     <th>Address</th>
+		    <th>Description</th>
                     <th>Additional Info</th>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@ Upcoming Cryptoparties
                     <td> {{ p.name }} </td>
                     <td> {{ p.time.strftime("%d.%m.%Y, %H:%M") }} </td>
                     <td> {{ p.street_address }} </td>
+		    <td> {{ p.description }} </td>
                     <td> <a href="{{p.additional_info}}">[link]</a>&nbsp;&nbsp; <a href="/feeds/ics/{{p.id}}" title="Use this link to copy the event into your calendar">[ics]</a></td>
                 </tr>
                 {% endfor %}
