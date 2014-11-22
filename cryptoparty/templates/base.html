@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <title>Cryptoparty.in - Find cryptoparties near you</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="alternate" type="application/atom+xml" title="Upcoming Cryptoparties" href="/feeds/atom"/>
+
+   {% endblock %}
+
+  </head>
+  <body>
+    <div class="navbar">
+        <!-- empty div for top padding -->
+    </div>
+    <div class="container">
+    <noscript>
+        <div class="alert">
+<strong>Oh, You don't like Javascript either</strong>. That's nice! You can look at the <a href="/party/upcoming">list of upcoming parties</a> just fine without Javascript. But to see them on a map, you'll need to enable Javascript selectively for this site.
+</div>
+    </noscript>
+    {% block message %}
+    {% endblock %}
+
+{% block pagecontent %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/jquery-2.0.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+{% endblock %}
+</div> {# closing .container #}
+ </body>
+</html>

@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Cryptoparties.in - Find cryptoparties near you</title>
-    <!-- Bootstrap -->
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+{% extends "base.html" %}
 
-  </head>
-  <body>
-    <div class="navbar">
-        <!-- empty div for top padding -->
-    </div>
- 
-    <div clas
-    <div class="container">
-    <noscript>
-        <div class="alert"><strong>Oh, You don't like Javascript either.</strong> That's nice! But this site doesn't make much sense without it. So please switch to a reasonable browser or add an exception in NoScript. Thanks!</div>
-    </noscript>
+{% block pagecontent %}
     <div class="row">
         <div class="span4">
             <a href="/"><img src="{{ url_for('static', filename='CryptoPartyLogo.png') }}"></a>
@@ -115,9 +99,11 @@
 
 
     </div>
-    <script src="/static/jquery-2.0.3.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+</div>
+    {% endblock %}
+
+    {% block scripts%}
+    {{ super() }}
     <script>
             $(document).ready(function() {
                 $('#datetimepicker2').datetimepicker({
@@ -127,13 +113,4 @@
                 });
             });
     </script>
-
-
-                </div>      
-
-
-
-   </div>
-
-  </body>
-</html>
+    {% endblock %}
