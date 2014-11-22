@@ -28,7 +28,7 @@ from cryptoparty import mail
 from cryptoparty.util import random_string, geocode, Pagination
 
 from flask import render_template, g, request, Response, abort
-from wtforms import Form, TextField, FileField, DateTimeField, validators
+from wtforms import Form, TextField, FileField, DateTimeField, validators, ValidationError
 from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 
@@ -123,11 +123,10 @@ def json_subscription_add():
     return 'OK'
 
 
+def date_in_future(form, field):
+    if field.data < datetime.now():
+        raise ValidationError('Cryptoparty date cannot be in the past')
 
-#    name = TextField('Name', [Required()])
-def validate_name(form, field):
-    if len(field.data) > 50:
-        raise ValidationError('Name must be less than 50 characters')
 
 @app.route('/subscription/confirm/<token>')
 def web_subscription_confirm(token):
@@ -149,9 +148,10 @@ def web_subscription_confirm(token):
 
 @app.route('/party/add', methods=['POST', 'GET'])
 def web_party_add():
+
     class AddPartyForm(Form):
         name = TextField('Event name', [validators.required()])
-        date = DateTimeField('Time and date', [validators.required()],
+        date = DateTimeField('Time and date', [validators.required(), date_in_future],
                              format='%d-%m-%Y %H:%M')
         additional_info = TextField('Additional Info', [validators.required(),
                                     validators.URL()])
