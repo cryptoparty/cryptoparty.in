@@ -28,22 +28,17 @@ from geoalchemy2 import Geography
 class Party(Base):
     __tablename__ = 'Parties'
     id = Column(Integer, primary_key=True)
-    name = Column(Unicode)
     time = Column(DateTime)
-    description = Column(UnicodeText, default="")
     additional_info = Column(String)
     street_address = Column(Unicode)
     organizer_email = Column(String)
-    organizer_avatar_url = Column(String)
     position = Column(Geography('POINT', srid=4326))
     confirmed = Column(Boolean)
     confirmation_token = Column(String)
 
-    def __init__(self, name, time, additional_info, street_address,
-                 organizer_email, lat, lon, description):
-        self.name = name
+    def __init__(self, time, additional_info, street_address,
+                 organizer_email, lat, lon):
         self.time = time
-        self.description = description
         self.additional_info = additional_info
         self.street_address = street_address
         self.organizer_email = organizer_email

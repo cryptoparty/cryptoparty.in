@@ -32,9 +32,9 @@ $(document).ready(function () {
             parties = jQuery.parseJSON(result)
             $.each(parties, function (index, value) {
                 var ll = new L.LatLng(value.position.coordinates[1], value.position.coordinates[0]);
-                var ico = new L.Icon({iconUrl: value.organizer_avatar_url, iconSize: [48,48]});
+                var ico = new L.Icon({iconUrl: "/static/generic_avatar.png", iconSize: [48,48]});
                 var marker = new L.Marker(ll, {icon: ico});
-                marker.bindPopup('<p><h4>' + value.name + '</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p><p><b>Description: </b>' + value.description + '</p><p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>');
+                marker.bindPopup('<p><h4>Cryptoparty</h4></p>' + '<p><b>Street Address: </b>' + value.street_address + '</p>' + '<p><b>Date: </b>' + value.time + '</p><p><b>Additional Info: </b><a href="' + value.additional_info + '">[link]</a></p>' + '<p><b>Event Organizer: </b>' + value.organizer_email + '</p>');
                 marker.addTo(map);
                                
             });

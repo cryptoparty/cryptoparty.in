@@ -33,13 +33,6 @@
         {% endif %}
 
         <form method="POST" url="" enctype="multipart/form-data">
-        <!-- Text input-->
-        <div class="control-group">
-        <label class="control-label" for="textinput">Event name</label>
-        <div class="controls">
-	{{ form.name(class_="input-xlarge", placeholder="Kryptofest") }}
-        </div>
-        </div>
 
         <!-- Text input-->
         <div class="control-group">
@@ -56,15 +49,6 @@
 
         </div>
         </div>
-
-        <div class="control-group">
-        <label class="control-label" for="textinput">Description</label>
-        <div class="controls">
-	{{ form.description(class_="input-xlarge", placeholder="We'll learn about anonymous browsing with Tor, email encryption with GnuPG, and anything else participants come up with.", cols="270", rows="6") }}
-        <p class="help-block">What do you plan to do at your party?</p>
-        </div>
-        </div>
-
 
         <!-- Text input-->
         <div class="control-group">
