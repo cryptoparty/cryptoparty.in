@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 # (c) Johannes Fürmann <johannes@weltraumpflege.org>
 # http://weltraumpflege.org/~johannes
@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
-
 
 def initdb():
     """
